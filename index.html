@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibeathon Côte d'Ivoire</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --accent-color: #C9A84C;
+            --accent-light: #e0c57a;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .logo-text {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        .bg-waves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .bg-waves svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            padding: 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .nav-links button:hover {
+            color: var(--accent-color);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .btn-cta {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-block;
+            border: 1px solid var(--accent-color);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-cta:hover {
+            background: transparent;
+            color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            margin-bottom: 1rem;
+            line-height: 1;
+            background: linear-gradient(to bottom, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p.subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero .date-location {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        /* --- SECTIONS COMMON --- */
+        section {
+            padding: 8rem 0;
+        }
+
+        h2.section-title {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2.section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        /* --- SECTION C'EST QUOI --- */
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .vibe-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            background: rgba(201, 168, 76, 0.05);
+        }
+
+        .card .icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* --- SECTION WHY --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.2rem;
+        }
+
+        /* --- COUNTDOWN --- */
+        .countdown-section {
+            background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.05), transparent);
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .countdown-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- TICKETS --- */
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ticket-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(201, 168, 76, 0.2);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .ticket-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+            transform: scale(1.02);
+        }
+
+        .ticket-card.vip {
+            border-color: var(--accent-color);
+            background: rgba(201, 168, 76, 0.05);
+        }
+
+        .ticket-card.vip::before {
+            content: 'RECOMMANDÉ';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.5rem 3rem;
+            font-size: 0.7rem;
+            font-weight: 800;
+            transform: rotate(45deg);
+        }
+
+        .price {
+            font-family: 'Inter', sans-serif;
+            font-size: 3rem;
+            color: #fff;
+            margin: 1.5rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .ticket-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .ticket-features li {
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticket-features li::before {
+            content: '✓';
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* --- FAQ --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--accent-color);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            color: var(--accent-color);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            padding: 3rem;
+            border-radius: 16px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .form-group input, .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            color: #fff;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(201, 168, 76, 0.05);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .modal.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-panel {
+            position: relative;
+            width: min(900px, 100%);
+            max-height: min(80vh, 720px);
+            overflow: auto;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(201, 168, 76, 0.15);
+            transform: translateY(10px) scale(0.98);
+            transition: transform 0.25s ease;
+        }
+
+        .modal.is-open .modal-panel {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            line-height: 1.1;
+            color: #fff;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .event-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .fact {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .fact .k {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+        }
+
+        .fact .v {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .fact .s {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.35rem;
+        }
+
+        .payment-modal .modal-panel {
+            padding: 0;
+            background: rgba(18, 10, 34, 0.98);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 90px rgba(0, 0, 0, 0.7), 0 0 40px rgba(160, 80, 255, 0.18);
+        }
+
+        .payment-modal .modal-header {
+            margin: 0;
+            padding: 1rem 1.25rem;
+            background: rgba(51, 26, 78, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            align-items: center;
+        }
+
+        .payment-modal .modal-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-transform: none;
+        }
+
+        .payment-modal .modal-close {
+            background: transparent;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+        }
+
+        .payment-modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: transparent;
+            box-shadow: none;
+            transform: none;
+            color: #fff;
+        }
+
+        .payment-modal .modal-body {
+            padding: 1.25rem;
+        }
+
+        .payment-banner {
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 1.25rem;
+            background:
+                radial-gradient(900px 280px at 70% 30%, rgba(255, 0, 214, 0.25), transparent 55%),
+                radial-gradient(700px 260px at 20% 50%, rgba(255, 201, 76, 0.18), transparent 60%),
+                linear-gradient(135deg, rgba(20, 10, 40, 0.95), rgba(12, 6, 28, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .payment-banner h3 {
+            font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-banner .sub {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.95rem;
+        }
+
+        .payment-summary {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-amount {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.9rem;
+            margin-top: 1.25rem;
+        }
+
+        .payment-method {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #fff;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .payment-method:hover {
+            border-color: rgba(201, 168, 76, 0.55);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .payment-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #0a0a0a;
+        }
+
+        .payment-icon.wave {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+        }
+
+        .payment-icon.djamo {
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+        }
+
+        .payment-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            text-align: left;
+        }
+
+        .payment-name {
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-hint {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-block;
+            border: 1px solid rgba(201, 168, 76, 0.6);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(201, 168, 76, 0.08);
+            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            .countdown-number { font-size: 2.5rem; }
+            .countdown-item { min-width: 80px; }
+            section { padding: 5rem 0; }
+            .nav-links { gap: 1rem; }
+            .nav-links a, .nav-links button { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arrière-plan animé (SVG) -->
+    <div class="bg-waves">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <path id="wavePath" d="M0,500 C200,400 300,600 500,500 C700,400 800,600 1000,500 L1000,1000 L0,1000 Z" fill="url(#grad)" />
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--accent-color);stop-opacity:0.2" />
+                    <stop offset="100%" style="stop-color:var(--bg-color);stop-opacity:0" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="container">
+            <div class="logo-container">
+                <span class="logo-text">VIBEATHON</span>
+                <span class="logo-subtitle">ABIDJAN 2026</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Accueil</a>
+                <button type="button" data-modal-open="eventModal">Nos Évènements</button>
+                <a href="#tickets">Tickets</a>
+            </div>
+            <a href="#tickets" class="btn-cta">Prendre mon ticket →</a>
+        </div>
+    </nav>
+
+    <div class="modal" id="eventModal" aria-hidden="true">
+        <div class="modal-backdrop" data-modal-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle" tabindex="-1">
+            <div class="modal-header">
+                <h2 class="modal-title" id="eventModalTitle">Nos Évènements</h2>
+                <button class="modal-close" type="button" aria-label="Fermer" data-modal-close>×</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 1.05rem;">
+                VIBEATHON — ABIDJAN 2026 est une expérience premium où l’on passe de l’idée au produit grâce à l’IA, aux prompts et aux bons outils. Une journée intense, des vibes, des mentors, et un vrai lancement.
+            </p>
+            <div class="event-facts">
+                <div class="fact">
+                    <div class="k">Date</div>
+                    <div class="v">07 Juillet 2026</div>
+                    <div class="s">Côte d'Ivoire</div>
+                </div>
+                <div class="fact">
+                    <div class="k">Ville</div>
+                    <div class="v">Abidjan</div>
+                    <div class="s">Lieu communiqué bientôt</div>
+                </div>
+                <div class="fact">
+                    <div class="k">Format</div>
+                    <div class="v">Vibe Coding + IA</div>
+                    <div class="s">MVP, démo, pitch</div>
+                </div>
+                <div class="fact">
+                    <div class="k">Ce que tu repars avec</div>
+                    <div class="v">Un produit</div>
+                    <div class="s">Une démo prête à montrer</div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <a href="#tickets" class="btn-cta" data-modal-close>Voir les tickets →</a>
+                <a href="#contact" class="btn-secondary" data-modal-close>Nous contacter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal payment-modal" id="paymentModal" aria-hidden="true">
+        <div class="modal-backdrop" data-modal-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle" tabindex="-1">
+            <div class="modal-header">
+                <h2 class="modal-title" id="paymentModalTitle">Dépôt</h2>
+                <button class="modal-close" type="button" aria-label="Fermer" data-modal-close>×</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-banner">
+                    <h3>Choisis ton moyen de paiement</h3>
+                    <div class="sub">Mobile money + QR code, rapide et sécurisé.</div>
+                    <div class="payment-summary">
+                        <div class="payment-amount" id="paymentAmount">—</div>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <button type="button" class="payment-method" data-pay-method="wave">
+                        <div class="payment-icon wave">W</div>
+                        <div class="payment-meta">
+                            <div class="payment-name">Wave</div>
+                            <div class="payment-hint">Payer via Wave</div>
+                        </div>
+                    </button>
+                    <button type="button" class="payment-method" data-pay-method="djamo">
+                        <div class="payment-icon djamo">D</div>
+                        <div class="payment-meta">
+                            <div class="payment-name">Djamo</div>
+                            <div class="payment-hint">Payer via Djamo</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="reveal">Ce que tu imagines peut exister.</h1>
+            <p class="subtitle reveal">Pense. Crée. Lance.</p>
+            <div class="date-location reveal">07 Juillet 2026 — Abidjan, Côte d'Ivoire</div>
+            <a href="#tickets" class="btn-cta reveal">Je veux mon ticket →</a>
+        </div>
+    </section>
+
+    <!-- SECTION C'EST QUOI -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title reveal">C'est quoi le Vibeathon ?</h2>
+            <p class="about-text reveal">
+                Le Vibeathon n'est pas un hackathon classique. C'est un format nouvelle génération lié à la tendance du vibe coding — coder avec l'IA, les prompts et les bons outils plutôt qu'uniquement avec du code pur. Tu arrives avec une idée, tu repars avec un produit.
+            </p>
+            <div class="vibe-cards">
+                <div class="card reveal">
+                    <span class="icon">🎯</span>
+                    <h3>Vibe</h3>
+                    <p>Définis l'ambiance et la vision de ton projet avec l'IA.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="icon">💡</span>
+                    <h3>Code</h3>
+                    <p>Assemble ton MVP à une vitesse record grâce aux outils modernes.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="icon">🚀</span>
+                    <h3>Lance</h3>
+                    <p>Présente ton produit devant un jury et repars avec des prix.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION WHY -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title reveal">Pourquoi participer ?</h2>
+            <div class="features-grid">
+                <div class="feature-item reveal">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Networking Premium</h3>
+                    <p>Rencontre les meilleurs talents et acteurs de l'écosystème tech ivoirien.</p>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon">💎</div>
+                    <h3>Mentorat IA</h3>
+                    <p>Des experts en prompt engineering pour t'aider à propulser ton idée.</p>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Prix d'Excellence</h3>
+                    <p>Gagne des financements et du matériel pour ton futur business.</p>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon">✨</div>
+                    <h3>Vibes Uniques</h3>
+                    <p>Une expérience immersive entre art, tech et créativité pure.</p>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Masterclass IA</h3>
+                    <p>Apprends les dernières techniques de "vibe coding" en direct.</p>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Communauté</h3>
+                    <p>Rejoins un mouvement de créateurs qui façonnent l'avenir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION COUNTDOWN -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="section-title reveal">Le lancement approche</h2>
+            <div class="countdown-container reveal" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Jours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Heures</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Min</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Sec</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION TICKETS -->
+    <section id="tickets">
+        <div class="container">
+            <h2 class="section-title reveal">Prends ta place maintenant</h2>
+            <div class="tickets-grid">
+                <div class="ticket-card reveal">
+                    <h3>Ticket Supporter</h3>
+                    <div class="price">500 <span>FCFA</span></div>
+                    <ul class="ticket-features">
+                        <li>Accès à la communauté</li>
+                        <li>Support du projet</li>
+                        <li>Reçu de paiement</li>
+                    </ul>
+                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="500" data-ticket="supporter-500" style="width: 100%; text-align: center;">Payer →</button>
+                </div>
+                <div class="ticket-card reveal">
+                    <h3>Early Bird</h3>
+                    <div class="price">15.000 <span>FCFA</span></div>
+                    <ul class="ticket-features">
+                        <li>Accès aux 2 jours</li>
+                        <li>Goodies Vibeathon</li>
+                        <li>Repas inclus</li>
+                    </ul>
+                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="15000" data-ticket="early-bird" style="width: 100%; text-align: center;">Payer →</button>
+                </div>
+                <div class="ticket-card vip reveal">
+                    <h3>Pass VIP</h3>
+                    <div class="price">50.000 <span>FCFA</span></div>
+                    <ul class="ticket-features">
+                        <li>Tout le Pass Standard</li>
+                        <li>Siège VIP & Lounge</li>
+                        <li>Accès Networking Privé</li>
+                        <li>Dîner avec les mentors</li>
+                    </ul>
+                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="50000" data-ticket="vip" style="width: 100%; text-align: center;">Payer →</button>
+                </div>
+                <div class="ticket-card reveal">
+                    <h3>Standard</h3>
+                    <div class="price">25.000 <span>FCFA</span></div>
+                    <ul class="ticket-features">
+                        <li>Accès complet</li>
+                        <li>T-shirt de l'événement</li>
+                        <li>Ateliers pratiques</li>
+                    </ul>
+                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="25000" data-ticket="standard" style="width: 100%; text-align: center;">Payer →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION FAQ -->
+    <section id="faq">
+        <div class="container">
+            <h2 class="section-title reveal">Questions Fréquentes</h2>
+            <div class="faq-container">
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        Qui peut participer ?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Tout le monde ! Que tu sois designer, marketeur, étudiant ou curieux de la tech. Pas besoin d'être un expert en code pur.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        C'est quoi le vibe coding ?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Le vibe coding est une approche où l'on utilise l'intelligence artificielle pour traduire une vision ou une "vibe" directement en produit fonctionnel, en se concentrant sur le résultat final plutôt que sur la syntaxe.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        Faut-il savoir coder ?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Non, c'est justement tout l'intérêt ! Tu peux utiliser des outils No-Code ou l'IA pour générer le code nécessaire à ton projet.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        Qu'est-ce qu'on gagne ?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>En plus de l'expérience et du networking, il y a des prix en cash, du matériel high-tech et des opportunités d'incubation pour les meilleurs projets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title reveal">Contacte-nous</h2>
+            <div class="contact-container reveal">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom Complet</label>
+                        <input type="text" id="name" placeholder="Ton nom ici" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="ton-email@exemple.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" placeholder="Comment pouvons-nous t'aider ?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-cta">Envoyer le message →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <span class="logo-text">VIBEATHON</span>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Abidjan 2026 — Côte d'Ivoire</p>
+            </div>
+            <div class="social-links">
+                <a href="#">Instagram</a>
+                <a href="#">Twitter / X</a>
+                <a href="#">TikTok</a>
+            </div>
+            <p class="copyright">© 2026 VIBEATHON. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- COUNTDOWN LOGIC ---
+        const targetDate = new Date('July 7, 2026 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = "<span class='countdown-number'>L'ÉVÉNEMENT A COMMENCÉ !</span>";
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- FAQ ACCORDION ---
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // --- REVEAL ANIMATIONS ---
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        const lastActiveByModalId = new Map();
+
+        function openModal(modal, triggerEl) {
+            if (!modal) return;
+            const modalPanel = modal.querySelector('.modal-panel');
+            lastActiveByModalId.set(modal.id, triggerEl || document.activeElement);
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            if (modalPanel) modalPanel.focus();
+        }
+
+        function closeModal(modal) {
+            if (!modal) return;
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            if (!document.querySelector('.modal.is-open')) {
+                document.body.classList.remove('modal-open');
+            }
+            const lastActive = lastActiveByModalId.get(modal.id);
+            if (lastActive && typeof lastActive.focus === 'function') {
+                lastActive.focus();
+            }
+            lastActiveByModalId.delete(modal.id);
+        }
+
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentAmountEl = document.getElementById('paymentAmount');
+        let paymentContext = { amount: 0, ticket: '' };
+
+        function setPaymentContextFromTrigger(triggerEl) {
+            const amount = Number(triggerEl.getAttribute('data-amount'));
+            const ticket = triggerEl.getAttribute('data-ticket') || '';
+            paymentContext = { amount, ticket };
+
+            if (paymentAmountEl) {
+                paymentAmountEl.textContent = `${amount.toLocaleString('fr-FR')} FCFA`;
+            }
+        }
+
+        document.querySelectorAll('[data-modal-open]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const modalId = el.getAttribute('data-modal-open');
+                if (!modalId) return;
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+
+                e.preventDefault();
+
+                if (modalId === 'paymentModal') {
+                    setPaymentContextFromTrigger(el);
+                }
+
+                openModal(modal, el);
+            });
+        });
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.querySelectorAll('[data-modal-close]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeModal(modal);
+                });
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            const open = document.querySelector('.modal.is-open');
+            if (!open) return;
+            closeModal(open);
+        });
+
+        // --- WAVE ANIMATION ---
+        const wavePath = document.getElementById('wavePath');
+        let phase = 0;
+
+        function animateWave() {
+            phase += 0.02;
+            const waveY = Math.sin(phase) * 20;
+            const d = `M0,500 C200,${400 + waveY} 300,${600 - waveY} 500,500 C700,${400 - waveY} 800,${600 + waveY} 1000,500 L1000,1000 L0,1000 Z`;
+            wavePath.setAttribute('d', d);
+            requestAnimationFrame(animateWave);
+        }
+        animateWave();
+
+        async function startWaveCheckout({ amount, ticket, buttonEl }) {
+            if (!buttonEl) return;
+
+            const originalText = buttonEl.textContent;
+            buttonEl.disabled = true;
+            buttonEl.textContent = 'Ouverture Wave…';
+
+            const fallbackPayLinkRaw = 'https://pay.wave.com/m/M_ci_yBsEOmpI8df1/c/ci/.';
+            const fallbackPayLink = fallbackPayLinkRaw.endsWith('.') ? fallbackPayLinkRaw.slice(0, -1) : fallbackPayLinkRaw;
+
+            try {
+                const res = await fetch('/api/wave/create-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, currency: 'XOF', ticket })
+                });
+
+                const data = await res.json().catch(() => null);
+                const session = data && data.session ? data.session : null;
+                const waveLaunchUrl =
+                    (data && data.waveLaunchUrl) ||
+                    (session && (session.wave_launch_url || session.waveLaunchUrl)) ||
+                    null;
+
+                if (!res.ok || !waveLaunchUrl) {
+                    const isNotConfigured = data && data.error === 'server_not_configured';
+                    if (isNotConfigured) {
+                        if (confirm(`Paiement Wave: entre le montant ${amount.toLocaleString('fr-FR')} FCFA dans Wave. Continuer ?`)) {
+                            window.location.href = fallbackPayLink;
+                            return;
+                        }
+                        throw new Error('cancelled');
+                    }
+                    throw new Error('wave_session_failed');
+                }
+
+                window.location.href = waveLaunchUrl;
+            } catch {
+                buttonEl.disabled = false;
+                buttonEl.textContent = originalText;
+                alert("Paiement Wave indisponible pour l'instant. Réessaie dans quelques minutes.");
+            }
+        }
+
+        async function startDjamoCheckout({ amount, ticket, buttonEl }) {
+            if (!buttonEl) return;
+
+            const originalText = buttonEl.textContent;
+            buttonEl.disabled = true;
+            buttonEl.textContent = 'Ouverture…';
+
+            const fallbackPayLink = 'https://pay.djamo.com/x94zp';
+
+            try {
+                const res = await fetch('/api/djamo/create-charge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, ticket })
+                });
+
+                const data = await res.json().catch(() => null);
+                const charge = data && data.charge ? data.charge : null;
+                const paymentUrl =
+                    (data && data.paymentUrl) ||
+                    (charge && (charge.paymentUrl || charge.payment_url)) ||
+                    null;
+
+                if (!res.ok || !paymentUrl) {
+                    const isNotConfigured = data && data.error === 'server_not_configured';
+                    if (isNotConfigured) {
+                        if (confirm(`Paiement Djamo: entre le montant ${amount.toLocaleString('fr-FR')} FCFA dans Djamo. Continuer ?`)) {
+                            window.location.href = fallbackPayLink;
+                            return;
+                        }
+                        throw new Error('cancelled');
+                    }
+                    throw new Error('djamo_charge_failed');
+                }
+
+                window.location.href = paymentUrl;
+            } catch (err) {
+                buttonEl.disabled = false;
+                buttonEl.textContent = originalText;
+
+                if (err && String(err.message) === 'cancelled') {
+                    return;
+                }
+
+                alert("Paiement Djamo indisponible pour l'instant. Réessaie dans quelques minutes.");
+            }
+        }
+
+        if (paymentModal) {
+            paymentModal.querySelectorAll('[data-pay-method]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const method = btn.getAttribute('data-pay-method');
+                    if (method === 'wave') {
+                        startWaveCheckout({ amount: paymentContext.amount, ticket: paymentContext.ticket, buttonEl: btn });
+                        return;
+                    }
+                    if (method === 'djamo') {
+                        startDjamoCheckout({ amount: paymentContext.amount, ticket: paymentContext.ticket, buttonEl: btn });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
