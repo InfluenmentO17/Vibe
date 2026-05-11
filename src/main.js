@@ -202,7 +202,6 @@ if (canvas) {
     
     init();
     animate();
-  }
 }
 
 // Premium Shimmer Logo Logic
