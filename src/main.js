@@ -202,9 +202,52 @@ if (canvas) {
     
     init();
     animate();
+  }
 }
 
-// Premium Shimmer Logo Logic
+// Pricing Cards Reveal & Hover Animation
+const pricingCards = document.querySelectorAll('.flex.flex-col.bg-white.rounded-2xl');
+if (pricingCards.length > 0) {
+  // Initial entrance animation
+  pricingCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(50px)';
+    
+    setTimeout(() => {
+      card.style.transition = 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+      card.style.opacity = '1';
+      card.style.transform = card.classList.contains('md:-translate-y-4') ? 'translateY(-16px)' : 'translateY(0)';
+    }, 200 * index);
+  });
+
+  // Interactive 3D tilt on mouse move
+  pricingCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 20;
+      const rotateY = -(x - centerX) / 20;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      if (card.classList.contains('border-purple-500')) {
+        card.style.boxShadow = `0 20px 50px rgba(168, 85, 247, 0.4)`;
+      } else {
+        card.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.3)`;
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      const isElite = card.classList.contains('md:-translate-y-4');
+      card.style.transform = isElite ? 'perspective(1000px) rotateX(0) rotateY(0) translateY(-16px) scale(1)' : 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      card.style.boxShadow = '';
+    });
+  });
+}// Premium Shimmer Logo Logic
 const premiumLogo = document.getElementById('premium-logo');
 if (premiumLogo) {
   premiumLogo.classList.add('animate-shimmer');
