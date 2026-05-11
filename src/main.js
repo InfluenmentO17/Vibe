@@ -204,28 +204,84 @@ if (canvas) {
     animate();
 }
 
-// After Effects Style Logo Animation
-const aeLogo = document.getElementById('ae-logo');
-if (aeLogo) {
-  // Constant subtle 3D tilt based on mouse position
-  document.addEventListener('mousemove', (e) => {
-    const rect = aeLogo.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
+// Minimalist Line-Art Logo Animation (After Effects Style)
+const lineLogo = document.getElementById('line-art-logo');
+const logoLine = document.getElementById('logo-drawing-line');
+const logoReflection = document.getElementById('logo-reflection');
+
+if (lineLogo && logoLine) {
+  const text = "VIBEATHON";
+  lineLogo.innerHTML = '';
+  logoReflection.innerHTML = '';
+  
+  // Create spans for each letter with specific initial states for "motion design"
+  const charPairs = text.split('').map((char, index) => {
+    const span = document.createElement('span');
+    const reflectSpan = document.createElement('span');
     
-    const rotateX = -y / 10;
-    const rotateY = x / 20;
+    span.innerText = char;
+    reflectSpan.innerText = char;
     
-    aeLogo.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    aeLogo.style.textShadow = `${-x / 50}px ${-y / 50}px 10px rgba(168, 85, 247, 0.5)`;
+    span.style.display = 'inline-block';
+    span.style.opacity = '0';
+    span.style.transform = 'scale(0) rotate(-45deg) translateY(20px)';
+    span.style.filter = 'blur(10px)';
+    
+    reflectSpan.style.display = 'inline-block';
+    reflectSpan.style.opacity = '0';
+    reflectSpan.style.transform = 'scale(0) rotate(45deg) translateY(-20px)';
+    
+    lineLogo.appendChild(span);
+    logoReflection.appendChild(reflectSpan);
+    
+    return { main: span, reflect: reflectSpan };
   });
 
-  // Entrance animation: Cinematic scan
-  let scanCount = 0;
-  const scanInterval = setInterval(() => {
-    aeLogo.classList.add('scanning');
-    setTimeout(() => aeLogo.classList.remove('scanning'), 1000);
-    scanCount++;
-    if (scanCount > 3) clearInterval(scanInterval);
-  }, 4000);
+  // Animation Sequence
+  const runAnimation = () => {
+    // Reset
+    logoLine.style.width = '0';
+    charPairs.forEach(p => {
+      p.main.style.opacity = '0';
+      p.main.style.transform = 'scale(0) rotate(-45deg) translateY(20px)';
+      p.main.style.filter = 'blur(10px)';
+      p.reflect.style.opacity = '0';
+    });
+
+    setTimeout(() => {
+      // 1. Trace horizontal line fluently
+      logoLine.style.transition = 'width 1.8s cubic-bezier(0.65, 0, 0.35, 1)';
+      logoLine.style.width = '100%';
+
+      // 2. Reveal letters with "circular" and fluid motion
+      charPairs.forEach((pair, i) => {
+        setTimeout(() => {
+          // Main Letter
+          pair.main.style.transition = 'all 1s cubic-bezier(0.22, 1, 0.36, 1)';
+          pair.main.style.opacity = '1';
+          pair.main.style.transform = 'scale(1) rotate(0deg) translateY(0)';
+          pair.main.style.filter = 'blur(0px)';
+          
+          // Reflection
+          pair.reflect.style.transition = 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+          pair.reflect.style.opacity = '0.2';
+          pair.reflect.style.transform = 'scale(1) rotate(0deg) translateY(0)';
+        }, 300 + (i * 80)); // Stagger based on line progress
+      });
+
+      // 3. Fade out the drawing line after completion
+      setTimeout(() => {
+        logoLine.style.transition = 'opacity 1s ease';
+        logoLine.style.opacity = '0';
+      }, 2000);
+    }, 500);
+  };
+
+  runAnimation();
+  
+  // Re-run animation on hover of the container
+  document.getElementById('line-art-logo-container').parentElement.addEventListener('mouseenter', () => {
+    logoLine.style.opacity = '1';
+    runAnimation();
+  });
 }

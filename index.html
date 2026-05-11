@@ -12,13 +12,16 @@
       <div class="max-w-[1280px] mx-auto px-4 md:px-8 w-full flex items-center justify-between">
         <div class="flex items-center gap-4">
           <a href="/" class="flex items-center gap-3 group">
-            <div id="ae-logo" class="relative flex items-center text-white font-black tracking-tighter text-2xl uppercase italic px-4 py-1 overflow-hidden group">
-              <span class="relative z-10">VIBEATHON 2026</span>
-              <!-- Cinematic Beam -->
-              <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-purple-400 to-transparent -translate-x-full group-hover:animate-beam z-20 opacity-0 group-hover:opacity-100"></div>
-              <!-- Glitch Layers -->
-              <div class="absolute inset-0 text-red-500 opacity-0 group-hover:opacity-70 group-hover:animate-glitch-1 z-0 translate-x-1">VIBEATHON 2026</div>
-              <div class="absolute inset-0 text-cyan-500 opacity-0 group-hover:opacity-70 group-hover:animate-glitch-2 z-0 -translate-x-1">VIBEATHON 2026</div>
+            <div id="line-art-logo-container" class="relative py-4">
+              <div id="line-art-logo" class="relative z-10 flex items-center text-white font-bold tracking-[0.2em] text-2xl uppercase font-sans">
+                VIBEATHON
+              </div>
+              <!-- Surface reflection -->
+              <div id="logo-reflection" class="absolute top-[100%] left-0 w-full text-white font-bold tracking-[0.2em] text-2xl uppercase font-sans opacity-20 scale-y-[-1] blur-[2px] pointer-events-none origin-top">
+                VIBEATHON
+              </div>
+              <!-- The Line that draws the logo -->
+              <div id="logo-drawing-line" class="absolute top-1/2 left-0 w-0 h-[2px] bg-white z-20 shadow-[0_0_10px_#fff]"></div>
             </div>
           </a>
           <nav class="hidden lg:flex items-center gap-4 text-sm font-semibold">
