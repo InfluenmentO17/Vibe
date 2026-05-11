@@ -19,6 +19,15 @@
     background-clip: text;
     animation: shimmer 3s linear infinite;
   }
+
+  .animate-scale-up {
+    animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 @keyframes shimmer {

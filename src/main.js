@@ -210,6 +210,82 @@ if (premiumLogo) {
   premiumLogo.classList.add('animate-shimmer');
 }
 
+// Registration Form Logic
+window.openRegistrationForm = function(passName, amount) {
+  const modal = document.getElementById('registration-modal');
+  const passNameDisplay = document.getElementById('selected-pass-name');
+  const amountDisplay = document.getElementById('display-amount');
+  const formStep1 = document.getElementById('form-step-1');
+  const formStep2 = document.getElementById('form-step-2');
+
+  if (modal && passNameDisplay && amountDisplay) {
+    passNameDisplay.innerText = `Pass ${passName}`;
+    amountDisplay.innerText = amount > 0 ? `${amount.toLocaleString()} FCFA` : 'Gratuit';
+    
+    // Reset form steps
+    formStep1.classList.remove('hidden');
+    formStep2.classList.add('hidden');
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent scroll
+  }
+};
+
+window.closeRegistrationForm = function() {
+  const modal = document.getElementById('registration-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.style.overflow = ''; // Restore scroll
+  }
+};
+
+window.nextStep = function() {
+  const formStep1 = document.getElementById('form-step-1');
+  const formStep2 = document.getElementById('form-step-2');
+  const passName = document.getElementById('selected-pass-name').innerText;
+
+  // Validation simple
+  const inputs = formStep1.querySelectorAll('input[required]');
+  let isValid = true;
+  inputs.forEach(input => {
+    if (!input.value) {
+      input.classList.add('border-red-500');
+      isValid = false;
+    } else {
+      input.classList.remove('border-red-500');
+    }
+  });
+
+  if (!isValid) return;
+
+  // Si c'est le pass gratuit, on peut directement soumettre ou afficher un message de succès
+  if (passName.includes('Public')) {
+    alert('Inscription réussie ! Vous allez recevoir votre badge par email.');
+    closeRegistrationForm();
+    return;
+  }
+
+  formStep1.classList.add('hidden');
+  formStep2.classList.remove('hidden');
+};
+
+window.prevStep = function() {
+  const formStep1 = document.getElementById('form-step-1');
+  const formStep2 = document.getElementById('form-step-2');
+  formStep2.classList.add('hidden');
+  formStep1.classList.remove('hidden');
+};
+
+// Form Submission
+const regForm = document.getElementById('registration-form');
+if (regForm) {
+  regForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Félicitations ! Votre demande d\'inscription est en cours de validation. Vous recevrez une confirmation après vérification de la transaction.');
+    closeRegistrationForm();
+  });
+}
+
 // Objectives Interactive Canvas Animation
 const objBgCanvas = document.getElementById('objectives-bg-canvas');
 const objInteractiveCanvas = document.getElementById('objectives-interactive-canvas');
