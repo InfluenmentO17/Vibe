@@ -209,3 +209,158 @@ const premiumLogo = document.getElementById('premium-logo');
 if (premiumLogo) {
   premiumLogo.classList.add('animate-shimmer');
 }
+
+// Objectives Interactive Canvas Animation
+const objBgCanvas = document.getElementById('objectives-bg-canvas');
+const objInteractiveCanvas = document.getElementById('objectives-interactive-canvas');
+const objStatus = document.getElementById('objective-status');
+const objCards = document.querySelectorAll('.objective-card');
+
+if (objBgCanvas && objInteractiveCanvas) {
+  const bgCtx = objBgCanvas.getContext('2d');
+  const interCtx = objInteractiveCanvas.getContext('2d');
+  let bgParticles = [];
+  let interNodes = [];
+  let mouse = { x: 0, y: 0, active: false };
+
+  function resize() {
+    objBgCanvas.width = objBgCanvas.offsetWidth;
+    objBgCanvas.height = objBgCanvas.offsetHeight;
+    objInteractiveCanvas.width = objInteractiveCanvas.offsetWidth;
+    objInteractiveCanvas.height = objInteractiveCanvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Background Ambient Particles
+  class BgParticle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * objBgCanvas.width;
+      this.y = Math.random() * objBgCanvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedY = -Math.random() * 0.5 - 0.2;
+      this.alpha = Math.random() * 0.5;
+    }
+    update() {
+      this.y += this.speedY;
+      if (this.y < -10) this.reset();
+    }
+    draw() {
+      bgCtx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+      bgCtx.beginPath();
+      bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      bgCtx.fill();
+    }
+  }
+
+  // Interactive Connection Nodes
+  class InterNode {
+    constructor(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.baseX = x;
+      this.baseY = y;
+      this.color = color || '#a855f7';
+      this.size = 4;
+      this.vx = (Math.random() - 0.5) * 2;
+      this.vy = (Math.random() - 0.5) * 2;
+    }
+    update() {
+      if (mouse.active) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 150) {
+          const force = (150 - dist) / 150;
+          this.vx += dx * force * 0.02;
+          this.vy += dy * force * 0.02;
+        }
+      }
+      this.vx *= 0.95;
+      this.vy *= 0.95;
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      // Return to base
+      this.x += (this.baseX - this.x) * 0.05;
+      this.y += (this.baseY - this.y) * 0.05;
+    }
+    draw() {
+      interCtx.fillStyle = this.color;
+      interCtx.shadowBlur = 10;
+      interCtx.shadowColor = this.color;
+      interCtx.beginPath();
+      interCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      interCtx.fill();
+      interCtx.shadowBlur = 0;
+    }
+  }
+
+  // Initialize
+  for(let i=0; i<100; i++) bgParticles.push(new BgParticle());
+  for(let i=0; i<40; i++) {
+    interNodes.push(new InterNode(
+      Math.random() * objInteractiveCanvas.width,
+      Math.random() * objInteractiveCanvas.height
+    ));
+  }
+
+  objInteractiveCanvas.addEventListener('mousemove', (e) => {
+    const rect = objInteractiveCanvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.active = true;
+  });
+  objInteractiveCanvas.addEventListener('mouseleave', () => mouse.active = false);
+
+  // Card Hover Interaction
+  objCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const color = card.getAttribute('data-color');
+      const text = card.querySelector('h3').innerText;
+      objStatus.innerText = `Focus : ${text}`;
+      objStatus.style.color = color;
+      objStatus.style.borderColor = color;
+      interNodes.forEach(node => node.color = color);
+    });
+    card.addEventListener('mouseleave', () => {
+      objStatus.innerText = "Système d'innovation actif";
+      objStatus.style.color = '#a855f7';
+      objStatus.style.borderColor = '#30363d';
+      interNodes.forEach(node => node.color = '#a855f7');
+    });
+  });
+
+  function animate() {
+    bgCtx.clearRect(0, 0, objBgCanvas.width, objBgCanvas.height);
+    interCtx.clearRect(0, 0, objInteractiveCanvas.width, objInteractiveCanvas.height);
+
+    bgParticles.forEach(p => { p.update(); p.draw(); });
+    
+    interNodes.forEach((n, i) => {
+      n.update();
+      n.draw();
+      // Draw lines
+      for(let j=i+1; j<interNodes.length; j++) {
+        const n2 = interNodes[j];
+        const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+        if (dist < 100) {
+          interCtx.strokeStyle = n.color;
+          interCtx.globalAlpha = (100 - dist) / 100 * 0.5;
+          interCtx.lineWidth = 1;
+          interCtx.beginPath();
+          interCtx.moveTo(n.x, n.y);
+          interCtx.lineTo(n2.x, n2.y);
+          interCtx.stroke();
+          interCtx.globalAlpha = 1;
+        }
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
