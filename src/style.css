@@ -5,52 +5,26 @@
 }
 
 @layer utilities {
-  .animate-beam {
-    animation: beam 0.8s ease-out forwards;
+  .animate-shimmer {
+    background: linear-gradient(
+      to right,
+      #ffffff 20%,
+      #a855f7 40%,
+      #a855f7 60%,
+      #ffffff 80%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
   }
-  .animate-glitch-1 {
-    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
   }
-  .animate-glitch-2 {
-    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
-  }
-  .animate-shine {
-    animation: shine 2s infinite;
-  }
-}
-
-/* Line-Art Logo Specific Styles */
-#line-art-logo-container {
-  perspective: 1000px;
-}
-
-#line-art-logo span {
-  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  filter: blur(4px);
-}
-
-#logo-reflection {
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1), transparent);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), transparent);
-}
-
-@keyframes beam {
-  0% { transform: translateX(-100%) skewX(-20deg); }
-  100% { transform: translateX(200%) skewX(-20deg); }
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%) skewX(-12deg); }
-  100% { transform: translateX(200%) skewX(-12deg); }
-}
-
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
 }
 
 @theme {
