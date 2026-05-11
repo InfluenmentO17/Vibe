@@ -204,17 +204,53 @@ if (canvas) {
     animate();
 }
 
-// Logo Animation (Navbar)
-const logoText = document.getElementById('logo-text');
-if (logoText) {
-  let hue = 0;
-  function animateLogo() {
-    hue = (hue + 1) % 360;
-    // Subtle color shift and gentle float
-    const yOffset = Math.sin(Date.now() / 1000) * 3;
-    logoText.style.color = `hsl(${hue}, 70%, 70%)`;
-    logoText.style.transform = `translateY(${yOffset}px)`;
-    requestAnimationFrame(animateLogo);
-  }
-  animateLogo();
+// After Effects Style Logo Animation
+const aeLogo = document.getElementById('ae-logo');
+if (aeLogo) {
+  const text = aeLogo.innerText;
+  aeLogo.innerHTML = '';
+  
+  // Split text into spans for each character
+  const chars = text.split('').map(char => {
+    const span = document.createElement('span');
+    span.innerText = char === ' ' ? '\u00A0' : char;
+    span.style.display = 'inline-block';
+    span.style.opacity = '0';
+    span.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(3) rotate(${Math.random() * 360}deg)`;
+    span.style.filter = 'blur(10px)';
+    aeLogo.appendChild(span);
+    return span;
+  });
+
+  // Animate characters to their final position
+  setTimeout(() => {
+    chars.forEach((span, index) => {
+      setTimeout(() => {
+        span.style.transition = 'all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)'; // Spring/Overshoot effect
+        span.style.opacity = '1';
+        span.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
+        span.style.filter = 'blur(0px)';
+        
+        // Add a temporary glow effect common in AE
+        span.style.textShadow = '0 0 20px rgba(168, 85, 247, 1), 0 0 40px rgba(168, 85, 247, 0.6)';
+        setTimeout(() => {
+          span.style.textShadow = 'none';
+        }, 1500);
+      }, index * 50); // Stagger effect
+    });
+  }, 500);
+
+  // Periodic subtle "glitch" or "shimmer" effect after assembly
+  setInterval(() => {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    const char = chars[randomIndex];
+    char.style.transition = 'none';
+    char.style.color = '#a855f7';
+    char.style.textShadow = '0 0 10px #a855f7';
+    setTimeout(() => {
+      char.style.transition = 'all 0.5s';
+      char.style.color = 'white';
+      char.style.textShadow = 'none';
+    }, 100);
+  }, 3000);
 }
