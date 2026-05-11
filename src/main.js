@@ -211,6 +211,9 @@ if (premiumLogo) {
 }
 
 // Registration Form Logic
+let currentSelectedPass = '';
+let currentSelectedAmount = 0;
+
 window.openRegistrationForm = function(passName, amount) {
   const modal = document.getElementById('registration-modal');
   const passNameDisplay = document.getElementById('selected-pass-name');
@@ -219,6 +222,8 @@ window.openRegistrationForm = function(passName, amount) {
   const formStep2 = document.getElementById('form-step-2');
 
   if (modal && passNameDisplay && amountDisplay) {
+    currentSelectedPass = passName;
+    currentSelectedAmount = amount;
     passNameDisplay.innerText = `Pass ${passName}`;
     amountDisplay.innerText = amount > 0 ? `${amount.toLocaleString()} FCFA` : 'Gratuit';
     
@@ -293,6 +298,12 @@ window.selectPayment = function(method, number, name) {
   const numDisplay = document.getElementById('payment-number');
   const nameDisplay = document.getElementById('payment-name');
   
+  let url = null;
+  if (method === 'wave' && currentSelectedPass === 'Vibe Elite') {
+    url = 'https://pay.wave.com/m/M_ci_2FSno87hLF9X/c/ci/?amount=20000.';
+    name = 'Creativ X';
+  }
+
   // Highlight selected option
   options.forEach(opt => {
     opt.classList.remove('border-purple-500', 'bg-purple-500/5');
@@ -303,7 +314,11 @@ window.selectPayment = function(method, number, name) {
 
   // Show instructions
   if (instructions && numDisplay && nameDisplay) {
-    numDisplay.innerText = number;
+    if (url) {
+      numDisplay.innerHTML = `<a href="${url}" target="_blank" class="inline-block px-6 py-2 bg-[#1ca1f1] text-white rounded-xl hover:scale-105 transition-all text-sm font-bold mb-2">Payer avec Wave</a>`;
+    } else {
+      numDisplay.innerText = number;
+    }
     nameDisplay.innerText = name;
     instructions.classList.remove('hidden');
   }
