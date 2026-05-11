@@ -130,89 +130,112 @@
         </div>
     </main>
 
-    <!-- Registration Modal -->
+    <!-- Registration Modal (Modern Dark Glass Design) -->
     <div id="registration-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-[#05010d]/90 backdrop-blur-sm" onclick="closeRegistrationForm()"></div>
-        <div class="relative bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-scale-up">
-            <div class="bg-[#1a0b2e] p-6 text-white flex justify-between items-center">
-                <div>
-                    <h2 class="text-xl font-black uppercase italic tracking-tighter">Inscription Vibeathon</h2>
-                    <p id="selected-pass-name" class="text-purple-400 text-xs font-bold uppercase tracking-widest mt-1">Pass Vibe Elite</p>
-                </div>
-                <button onclick="closeRegistrationForm()" class="text-white/50 hover:text-white transition-colors">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
+        <div class="absolute inset-0 bg-[#05010d]/95 backdrop-blur-md" onclick="closeRegistrationForm()"></div>
+        
+        <div class="relative w-full max-w-2xl bg-[#0d1117] border border-[#30363d] rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(168,85,247,0.15)] animate-scale-up">
+            <!-- Top Gradient Bar -->
+            <div class="h-1.5 w-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600"></div>
             
-            <form id="registration-form" class="p-8 space-y-6">
-                <!-- Step 1: Info -->
-                <div id="form-step-1" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Nom</label>
-                            <input type="text" required placeholder="Doe" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm text-[#1a0b2e] focus:outline-none focus:border-purple-500 transition-colors" />
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Prénom</label>
-                            <input type="text" required placeholder="John" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm text-[#1a0b2e] focus:outline-none focus:border-purple-500 transition-colors" />
-                        </div>
+            <div class="flex flex-col md:flex-row">
+                <!-- Sidebar: Pass Info -->
+                <div class="w-full md:w-64 bg-[#161b22] p-8 border-b md:border-b-0 md:border-r border-[#30363d]">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+                        Inscription
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Email professionnel</label>
-                        <input type="email" required placeholder="john@example.com" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm text-[#1a0b2e] focus:outline-none focus:border-purple-500 transition-colors" />
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Téléphone (WhatsApp)</label>
-                        <input type="tel" required placeholder="+225 07 00 00 00 00" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm text-[#1a0b2e] focus:outline-none focus:border-purple-500 transition-colors" />
-                    </div>
-                    <button type="button" onclick="nextStep()" class="w-full py-4 bg-[#1a0b2e] text-white font-black rounded-xl hover:bg-[#2e1065] transition-all uppercase tracking-widest text-sm shadow-xl">
-                        Continuer vers le paiement
-                    </button>
-                </div>
-
-                <!-- Step 2: Payment (Mobile Money) -->
-                <div id="form-step-2" class="hidden space-y-6">
-                    <div class="bg-purple-50 border border-purple-100 rounded-xl p-4 text-center">
-                        <p class="text-[10px] font-bold text-purple-600 uppercase tracking-widest mb-1">Montant à régler</p>
-                        <div id="display-amount" class="text-3xl font-black text-[#1a0b2e]">20 000 FCFA</div>
-                    </div>
-
+                    <h2 id="selected-pass-name" class="text-2xl font-black text-white uppercase italic tracking-tighter mb-2">Pass Vibe Elite</h2>
+                    <div id="display-amount" class="text-xl font-bold text-purple-400 mb-8">20 000 FCFA</div>
+                    
                     <div class="space-y-4">
-                        <p class="text-xs text-gray-500 text-center italic">Veuillez effectuer le transfert Mobile Money sur l'un des numéros ci-dessous :</p>
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-[#FF6600] rounded-md flex items-center justify-center text-white text-[10px] font-bold">ORANGE</div>
-                                    <span class="text-sm font-bold text-[#1a0b2e]">07 XX XX XX XX</span>
-                                </div>
-                                <span class="text-[10px] text-gray-400 font-mono">NOM_DESTINATAIRE</span>
-                            </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-[#FFCC00] rounded-md flex items-center justify-center text-white text-[10px] font-bold text-[#1a0b2e]">MTN</div>
-                                    <span class="text-sm font-bold text-[#1a0b2e]">05 XX XX XX XX</span>
-                                </div>
-                                <span class="text-[10px] text-gray-400 font-mono">NOM_DESTINATAIRE</span>
-                            </div>
+                        <div class="flex items-center gap-3 text-[11px] text-[#8b949e]">
+                            <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                            Vérification sécurisée
+                        </div>
+                        <div class="flex items-center gap-3 text-[11px] text-[#8b949e]">
+                            <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                            Validation manuelle
                         </div>
                     </div>
-
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">ID de transaction / Référence</label>
-                        <input type="text" required placeholder="Ex: 245896325..." class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm text-[#1a0b2e] focus:outline-none focus:border-purple-500 transition-colors" />
-                        <p class="text-[10px] text-gray-400 mt-1">Saisissez l'ID reçu par SMS après votre transfert.</p>
-                    </div>
-
-                    <div class="flex gap-4">
-                        <button type="button" onclick="prevStep()" class="flex-1 py-4 border-2 border-gray-100 text-gray-400 font-bold rounded-xl hover:bg-gray-50 transition-all uppercase tracking-widest text-xs">
-                            Retour
-                        </button>
-                        <button type="submit" class="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-black rounded-xl hover:scale-[1.02] transition-all uppercase tracking-widest text-sm shadow-xl">
-                            Confirmer mon inscription
-                        </button>
-                    </div>
                 </div>
-            </form>
+
+                <!-- Main Form Area -->
+                <div class="flex-1 p-8">
+                    <form id="registration-form" class="space-y-8">
+                        <!-- Step 1: Identity -->
+                        <div id="form-step-1" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="group">
+                                    <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">Nom</label>
+                                    <input type="text" required placeholder="AMBEU" class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                                </div>
+                                <div class="group">
+                                    <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">Prénom</label>
+                                    <input type="text" required placeholder="Patrice" class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">Email</label>
+                                <input type="email" required placeholder="patrice@vibe.ci" class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                            </div>
+                            <div class="group">
+                                <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">WhatsApp</label>
+                                <input type="tel" required placeholder="+225 07 00 00 00 00" class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                            </div>
+                            
+                            <button type="button" onclick="nextStep()" class="w-full py-4 bg-white text-[#05010d] font-black rounded-xl hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-xs shadow-xl flex items-center justify-center gap-2 group">
+                                Continuer 
+                                <svg class="group-hover:translate-x-1 transition-transform" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Payment -->
+                        <div id="form-step-2" class="hidden space-y-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FF6600]/50 transition-colors cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-[#FF6600]/10 rounded-lg flex items-center justify-center text-[#FF6600] font-bold text-xs">O</div>
+                                        <div>
+                                            <div class="text-xs font-bold text-white uppercase tracking-wider">Orange Money</div>
+                                            <div class="text-sm text-[#8b949e]">07 00 00 00 00</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[10px] text-gray-500 font-mono">NOM_BÉNÉFICIAIRE</div>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FFCC00]/50 transition-colors cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-[#FFCC00]/10 rounded-lg flex items-center justify-center text-[#FFCC00] font-bold text-xs italic">M</div>
+                                        <div>
+                                            <div class="text-xs font-bold text-white uppercase tracking-wider">MTN MoMo</div>
+                                            <div class="text-sm text-[#8b949e]">05 00 00 00 00</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[10px] text-gray-500 font-mono">NOM_BÉNÉFICIAIRE</div>
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">ID Transaction / Référence</label>
+                                <input type="text" required placeholder="Saisissez le code de confirmation..." class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                            </div>
+
+                            <div class="flex gap-4 pt-4">
+                                <button type="button" onclick="prevStep()" class="px-6 py-4 border border-[#30363d] text-[#8b949e] font-bold rounded-xl hover:bg-[#161b22] transition-all uppercase tracking-widest text-[10px]">
+                                    Retour
+                                </button>
+                                <button type="submit" class="flex-1 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-black rounded-xl hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all uppercase tracking-widest text-xs">
+                                    Confirmer l'inscription
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Close Button -->
+            <button onclick="closeRegistrationForm()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#161b22] border border-[#30363d] text-[#8b949e] hover:text-white transition-colors">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </div>
     </div>
 
