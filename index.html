@@ -1,1439 +1,643 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibeathon Côte d'Ivoire</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --accent-color: #C9A84C;
-            --accent-light: #e0c57a;
-            --text-color: #ffffff;
-            --text-muted: #a0a0a0;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, .logo-text {
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* --- BACKGROUND EFFECTS --- */
-        .bg-waves {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        .bg-waves svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- NAVBAR --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
-            padding: 1rem 0;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .nav-links button {
-            background: none;
-            border: none;
-            padding: 0;
-            color: var(--text-color);
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-
-        .nav-links button:hover {
-            color: var(--accent-color);
-        }
-
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .logo-subtitle {
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-        }
-
-        .btn-cta {
-            background: var(--accent-color);
-            color: var(--bg-color);
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            display: inline-block;
-            border: 1px solid var(--accent-color);
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-cta:hover {
-            background: transparent;
-            color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding-top: 80px;
-        }
-
-        .hero-content {
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            margin-bottom: 1rem;
-            line-height: 1;
-            background: linear-gradient(to bottom, #fff, var(--accent-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p.subtitle {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .hero .date-location {
-            font-size: 1.1rem;
-            color: var(--accent-color);
-            margin-bottom: 2.5rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-
-        /* --- SECTIONS COMMON --- */
-        section {
-            padding: 8rem 0;
-        }
-
-        h2.section-title {
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            text-align: center;
-            position: relative;
-        }
-
-        h2.section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--accent-color);
-        }
-
-        /* --- SECTION C'EST QUOI --- */
-        .about-text {
-            max-width: 800px;
-            margin: 0 auto 5rem;
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-        }
-
-        .vibe-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-            background: rgba(201, 168, 76, 0.05);
-        }
-
-        .card .icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .card h3 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        /* --- SECTION WHY --- */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .feature-icon {
-            color: var(--accent-color);
-            font-size: 2rem;
-        }
-
-        .feature-item h3 {
-            font-size: 1.2rem;
-        }
-
-        /* --- COUNTDOWN --- */
-        .countdown-section {
-            background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.05), transparent);
-        }
-
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            text-align: center;
-            min-width: 120px;
-        }
-
-        .countdown-number {
-            font-family: 'Inter', sans-serif;
-            font-size: 4rem;
-            font-weight: 800;
-            color: var(--accent-color);
-            display: block;
-            line-height: 1;
-        }
-
-        .countdown-label {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* --- TICKETS --- */
-        .tickets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .ticket-card {
-            background: var(--card-bg);
-            border: 2px solid rgba(201, 168, 76, 0.2);
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .ticket-card:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
-            transform: scale(1.02);
-        }
-
-        .ticket-card.vip {
-            border-color: var(--accent-color);
-            background: rgba(201, 168, 76, 0.05);
-        }
-
-        .ticket-card.vip::before {
-            content: 'RECOMMANDÉ';
-            position: absolute;
-            top: 20px;
-            right: -35px;
-            background: var(--accent-color);
-            color: var(--bg-color);
-            padding: 0.5rem 3rem;
-            font-size: 0.7rem;
-            font-weight: 800;
-            transform: rotate(45deg);
-        }
-
-        .price {
-            font-family: 'Inter', sans-serif;
-            font-size: 3rem;
-            color: #fff;
-            margin: 1.5rem 0;
-        }
-
-        .price span {
-            font-size: 1rem;
-            color: var(--text-muted);
-        }
-
-        .ticket-features {
-            list-style: none;
-            margin-bottom: 2.5rem;
-            text-align: left;
-        }
-
-        .ticket-features li {
-            margin-bottom: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ticket-features li::before {
-            content: '✓';
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        /* --- FAQ --- */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 1rem;
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 1.5rem 0;
-            background: none;
-            border: none;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .faq-question:hover {
-            color: var(--accent-color);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            color: var(--text-muted);
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding-bottom: 1.5rem;
-        }
-
-        .faq-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-            color: var(--accent-color);
-        }
-
-        /* --- CONTACT SECTION --- */
-        .contact-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 168, 76, 0.2);
-            padding: 3rem;
-            border-radius: 16px;
-        }
-
-        .contact-form {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-group label {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .form-group input, .form-group textarea {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            color: #fff;
-            border-radius: 4px;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            background: rgba(201, 168, 76, 0.05);
-        }
-
-        body.modal-open {
-            overflow: hidden;
-        }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.25s ease, visibility 0.25s ease;
-        }
-
-        .modal.is-open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-panel {
-            position: relative;
-            width: min(900px, 100%);
-            max-height: min(80vh, 720px);
-            overflow: auto;
-            background: rgba(15, 15, 15, 0.95);
-            border: 1px solid rgba(201, 168, 76, 0.35);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(201, 168, 76, 0.15);
-            transform: translateY(10px) scale(0.98);
-            transition: transform 0.25s ease;
-        }
-
-        .modal.is-open .modal-panel {
-            transform: translateY(0) scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            line-height: 1.1;
-            color: #fff;
-        }
-
-        .modal-close {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: grid;
-            place-items: center;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            box-shadow: 0 0 20px rgba(201, 168, 76, 0.25);
-            transform: translateY(-1px);
-        }
-
-        .event-facts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .fact {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1rem;
-        }
-
-        .fact .k {
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            margin-bottom: 0.35rem;
-        }
-
-        .fact .v {
-            color: #fff;
-            font-weight: 800;
-        }
-
-        .fact .s {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 0.35rem;
-        }
-
-        .payment-modal .modal-panel {
-            padding: 0;
-            background: rgba(18, 10, 34, 0.98);
-            border-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 90px rgba(0, 0, 0, 0.7), 0 0 40px rgba(160, 80, 255, 0.18);
-        }
-
-        .payment-modal .modal-header {
-            margin: 0;
-            padding: 1rem 1.25rem;
-            background: rgba(51, 26, 78, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            align-items: center;
-        }
-
-        .payment-modal .modal-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 0.2px;
-            text-transform: none;
-        }
-
-        .payment-modal .modal-close {
-            background: transparent;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-        }
-
-        .payment-modal .modal-close:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: transparent;
-            box-shadow: none;
-            transform: none;
-            color: #fff;
-        }
-
-        .payment-modal .modal-body {
-            padding: 1.25rem;
-        }
-
-        .payment-banner {
-            border-radius: 16px;
-            overflow: hidden;
-            padding: 1.25rem;
-            background:
-                radial-gradient(900px 280px at 70% 30%, rgba(255, 0, 214, 0.25), transparent 55%),
-                radial-gradient(700px 260px at 20% 50%, rgba(255, 201, 76, 0.18), transparent 60%),
-                linear-gradient(135deg, rgba(20, 10, 40, 0.95), rgba(12, 6, 28, 0.95));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .payment-banner h3 {
-            font-size: clamp(1.4rem, 3.2vw, 2.2rem);
-            line-height: 1.05;
-            margin-bottom: 0.5rem;
-        }
-
-        .payment-banner .sub {
-            color: rgba(255, 255, 255, 0.75);
-            font-size: 0.95rem;
-        }
-
-        .payment-summary {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .payment-amount {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: #fff;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.9rem;
-            margin-top: 1.25rem;
-        }
-
-        .payment-method {
-            appearance: none;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
-            color: #fff;
-            font-family: inherit;
-            width: 100%;
-        }
-
-        .payment-method:hover {
-            border-color: rgba(201, 168, 76, 0.55);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-        }
-
-        .payment-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            color: #0a0a0a;
-        }
-
-        .payment-icon.wave {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-        }
-
-        .payment-icon.djamo {
-            background: linear-gradient(135deg, #ffb347, #ffcc33);
-        }
-
-        .payment-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-            text-align: left;
-        }
-
-        .payment-name {
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .payment-hint {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent-color);
-            padding: 0.8rem 1.2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            display: inline-block;
-            border: 1px solid rgba(201, 168, 76, 0.6);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(201, 168, 76, 0.08);
-            box-shadow: 0 5px 15px rgba(201, 168, 76, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 5rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-        }
-
-        .footer-logo {
-            margin-bottom: 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .copyright {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        /* --- ANIMATIONS --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            .countdown-number { font-size: 2.5rem; }
-            .countdown-item { min-width: 80px; }
-            section { padding: 5rem 0; }
-            .nav-links { gap: 1rem; }
-            .nav-links a, .nav-links button { font-size: 0.8rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Arrière-plan animé (SVG) -->
-    <div class="bg-waves">
-        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
-            <path id="wavePath" d="M0,500 C200,400 300,600 500,500 C700,400 800,600 1000,500 L1000,1000 L0,1000 Z" fill="url(#grad)" />
-            <defs>
-                <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--accent-color);stop-opacity:0.2" />
-                    <stop offset="100%" style="stop-color:var(--bg-color);stop-opacity:0" />
-                </linearGradient>
-            </defs>
-        </svg>
-    </div>
-
-    <!-- NAVBAR -->
-    <nav>
-        <div class="container">
-            <div class="logo-container">
-                <span class="logo-text">VIBEATHON</span>
-                <span class="logo-subtitle">ABIDJAN 2026</span>
-            </div>
-            <div class="nav-links">
-                <a href="#">Accueil</a>
-                <button type="button" data-modal-open="eventModal">Nos Évènements</button>
-                <a href="#tickets">Tickets</a>
-            </div>
-            <a href="#tickets" class="btn-cta">Prendre mon ticket →</a>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4L12 20L20 4'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibeathon 2026 — Côte d'Ivoire | Let's build from here</title>
+  </head>
+  <body class="bg-[#1a0b2e] text-[#e6edf3] font-sans">
+    <!-- Navbar (Exact GitHub Design) -->
+    <header class="fixed top-0 w-full z-50 bg-[#1a0b2e]/80 backdrop-blur-md border-b border-[#3c1e6e]/50 h-16 flex items-center">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-8 w-full flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <a href="/" class="flex items-center gap-3 group">
+            <svg height="32" viewBox="0 0 24 24" fill="none" width="32" class="group-hover:scale-110 transition-transform">
+                <path d="M4 4L12 20L20 4" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-purple-400 transition-colors"/>
+            </svg>
+            <span class="text-white font-black tracking-tighter text-xl group-hover:text-purple-400 transition-colors">VIBEATHON 2026</span>
+          </a>
+          <nav class="hidden lg:flex items-center gap-4 text-sm font-semibold">
+            <a href="#" class="hover:text-[#a78bfa] transition-colors">Concept</a>
+            <a href="#" class="hover:text-[#a78bfa] transition-colors">Parcours</a>
+            <a href="#" class="hover:text-[#a78bfa] transition-colors">Partenaires</a>
+            <a href="#" class="hover:text-[#a78bfa] transition-colors">Tarifs</a>
+          </nav>
         </div>
-    </nav>
+        <div class="flex items-center gap-4">
+          <div class="hidden md:flex relative group">
+            <input type="text" placeholder="Rechercher..." class="bg-[#2e1065] border border-[#3c1e6e] rounded-md px-3 py-1 text-xs w-64 focus:w-80 transition-all focus:outline-none focus:border-[#a855f7] focus:ring-1 focus:ring-[#a855f7]" />
+            <span class="absolute right-2 top-1.5 border border-[#3c1e6e] rounded px-1 text-[10px] text-[#a78bfa]">/</span>
+          </div>
+          <a href="#" class="text-sm font-semibold hover:text-[#a78bfa]">Connexion</a>
+          <a href="#" class="border border-white/30 rounded-md px-3 py-1 text-sm font-semibold hover:border-white transition-colors">S'inscrire</a>
+        </div>
+      </div>
+    </header>
 
-    <div class="modal" id="eventModal" aria-hidden="true">
-        <div class="modal-backdrop" data-modal-close></div>
-        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle" tabindex="-1">
-            <div class="modal-header">
-                <h2 class="modal-title" id="eventModalTitle">Nos Évènements</h2>
-                <button class="modal-close" type="button" aria-label="Fermer" data-modal-close>×</button>
-            </div>
-            <p style="color: var(--text-muted); font-size: 1.05rem;">
-                VIBEATHON — ABIDJAN 2026 est une expérience premium où l’on passe de l’idée au produit grâce à l’IA, aux prompts et aux bons outils. Une journée intense, des vibes, des mentors, et un vrai lancement.
+    <main class="relative">
+      <!-- Background Effects -->
+      <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="gh-glow w-[800px] h-[800px] bg-purple-600/20 top-[-200px] left-[-200px]"></div>
+        <div class="gh-glow w-[600px] h-[600px] bg-pink-600/10 top-[20%] right-[-100px]"></div>
+      </div>
+
+      <!-- Hero Section (GitHub Style with Vibeathon Content) -->
+      <section class="relative pt-40 pb-64 overflow-hidden flex flex-col items-center justify-center text-center bg-gradient-to-b from-[#1a0b2e] to-[#2e1065]">
+        <!-- Background Glows -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-purple-600/30 blur-[150px] rounded-full"></div>
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-pink-600/20 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8 relative z-10 flex flex-col items-center">
+            <!-- Main Title -->
+            <h1 class="text-5xl md:text-8xl font-bold tracking-tight mb-6 animate-title-reveal uppercase">
+                Hackathon du<br/>
+                vibe coding
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg md:text-2xl font-mono tracking-[0.3em] text-[#a78bfa] mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+                PENSE. CRÉE. LANCE.
             </p>
-            <div class="event-facts">
-                <div class="fact">
-                    <div class="k">Date</div>
-                    <div class="v">07 Juillet 2026</div>
-                    <div class="s">Côte d'Ivoire</div>
+
+            <!-- Action Area (Input + Buttons) -->
+            <div class="flex flex-col md:flex-row gap-4 items-center w-full max-w-2xl animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-400">
+                <div class="flex-1 flex w-full bg-[#f6f8fa] rounded-lg overflow-hidden p-1 shadow-2xl">
+                    <input type="email" placeholder="Entrez votre email" class="flex-1 bg-transparent border-none px-4 py-3 text-[#1f2328] focus:outline-none placeholder-[#656d76]" />
+                    <button class="bg-[#2da44e] hover:bg-[#2c974b] text-white font-bold px-6 py-3 rounded-md transition-colors whitespace-nowrap">
+                        S'inscrire
+                    </button>
                 </div>
-                <div class="fact">
-                    <div class="k">Ville</div>
-                    <div class="v">Abidjan</div>
-                    <div class="s">Lieu communiqué bientôt</div>
-                </div>
-                <div class="fact">
-                    <div class="k">Format</div>
-                    <div class="v">Vibe Coding + IA</div>
-                    <div class="s">MVP, démo, pitch</div>
-                </div>
-                <div class="fact">
-                    <div class="k">Ce que tu repars avec</div>
-                    <div class="v">Un produit</div>
-                    <div class="s">Une démo prête à montrer</div>
-                </div>
+                <button class="w-full md:w-auto px-8 py-4 border border-[#3c1e6e] rounded-lg font-bold hover:border-white transition-all backdrop-blur-sm bg-[#2e1065] text-white">
+                    En savoir plus
+                </button>
             </div>
-            <div class="modal-actions">
-                <a href="#tickets" class="btn-cta" data-modal-close>Voir les tickets →</a>
-                <a href="#contact" class="btn-secondary" data-modal-close>Nous contacter</a>
+
+            <!-- Bottom Info Bar (Ticker style) -->
+            <div class="mt-24 flex items-center gap-4 text-[10px] md:text-xs font-bold tracking-widest text-[#a78bfa] uppercase animate-in fade-in duration-1000 delay-700">
+                <span class="border-t border-b border-[#3c1e6e] py-2 px-4">OUVERTE LE 1ER MAI 2026</span>
+                <span class="text-white">•</span>
+                <span class="border-t border-b border-[#3c1e6e] py-2 px-4">LA BILLETTERIE SERA OUVERTE LE 1ER MAI</span>
             </div>
         </div>
-    </div>
 
-    <div class="modal payment-modal" id="paymentModal" aria-hidden="true">
-        <div class="modal-backdrop" data-modal-close></div>
-        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle" tabindex="-1">
-            <div class="modal-header">
-                <h2 class="modal-title" id="paymentModalTitle">Dépôt</h2>
-                <button class="modal-close" type="button" aria-label="Fermer" data-modal-close>×</button>
-            </div>
-            <div class="modal-body">
-                <div class="payment-banner">
-                    <h3>Choisis ton moyen de paiement</h3>
-                    <div class="sub">Mobile money + QR code, rapide et sécurisé.</div>
-                    <div class="payment-summary">
-                        <div class="payment-amount" id="paymentAmount">—</div>
-                    </div>
-                </div>
-
-                <div class="payment-methods">
-                    <button type="button" class="payment-method" data-pay-method="wave">
-                        <div class="payment-icon wave">W</div>
-                        <div class="payment-meta">
-                            <div class="payment-name">Wave</div>
-                            <div class="payment-hint">Payer via Wave</div>
+        <!-- Floating 3D Mascots at the bottom of Hero -->
+        <div class="absolute bottom-0 left-0 w-full h-64 pointer-events-none flex justify-center gap-32 items-end pb-12">
+            <!-- Mascot 1 (Copilot style - Purple) -->
+            <div class="mascot-container !h-40 !w-40">
+                <div class="mascot-base" style="--color-stop-1: #b794f4; --color-stop-2: #805ad5; --glow-color: rgba(128,90,213,0.5); transform: rotateY(35deg) rotateX(-10deg);">
+                    <!-- Head -->
+                    <div class="mascot-part w-28 h-28 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"></div>
+                    <!-- Screen/Face -->
+                    <div class="mascot-screen w-16 h-12 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/4 z-30">
+                        <div class="flex justify-around items-center h-full px-2">
+                            <div class="w-1.5 h-3 bg-cyan-300 rounded-full animate-pulse"></div>
+                            <div class="w-1.5 h-3 bg-cyan-300 rounded-full animate-pulse"></div>
                         </div>
+                    </div>
+                    <!-- Goggles -->
+                    <div class="mascot-goggle w-10 h-6 left-[22%] top-[25%] z-40 rotate-[-12deg]"></div>
+                    <div class="mascot-goggle w-10 h-6 right-[22%] top-[25%] z-40 rotate-[12deg]"></div>
+                    <!-- Ambient Glow -->
+                    <div class="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full -z-10"></div>
+                </div>
+            </div>
+
+            <!-- Mascot 2 (Mona style - Pink/Magenta) -->
+            <div class="mascot-container !h-32 !w-32">
+                <div class="mascot-base" style="--color-stop-1: #fbb6ce; --color-stop-2: #d53f8c; --glow-color: rgba(213,63,140,0.5); transform: rotateY(-35deg) rotateX(-10deg);">
+                    <!-- Head -->
+                    <div class="mascot-part w-22 h-22 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"></div>
+                    <!-- Ears -->
+                    <div class="mascot-ear left-6 top-1 rotate-[-25deg] z-10"></div>
+                    <div class="mascot-ear right-6 top-1 rotate-[25deg] z-10"></div>
+                    <!-- Eyes -->
+                    <div class="mascot-eye w-3 h-4 left-[32%] top-1/2 -translate-y-1/2 z-30"></div>
+                    <div class="mascot-eye w-3 h-4 right-[32%] top-1/2 -translate-y-1/2 z-30"></div>
+                    <!-- Nose -->
+                    <div class="w-1 h-1 bg-black rounded-full absolute left-1/2 top-[62%] -translate-x-1/2 z-30"></div>
+                    <!-- Ambient Glow -->
+                    <div class="absolute inset-0 bg-pink-500/20 blur-2xl rounded-full -z-10"></div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Section: C’EST QUOI LE VIBEATHON ? -->
+      <section id="what-is" class="pt-32 pb-20 overflow-hidden border-t border-[#3c1e6e]/30 bg-[#1a0b2e]">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col md:flex-row gap-12">
+          
+          <!-- Left: Vertical Line & Icon -->
+          <div class="hidden md:flex flex-col items-center">
+            <div class="w-px h-full bg-gradient-to-b from-transparent via-[#3c1e6e] to-[#3c1e6e]"></div>
+            <div class="w-12 h-12 rounded-full border border-[#3c1e6e] flex items-center justify-center bg-[#1a0b2e] my-4 transition-transform hover:scale-110 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="w-px h-full bg-[#3c1e6e]"></div>
+          </div>
+
+          <!-- Right: Content -->
+          <div class="flex-1">
+            <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-8 reveal uppercase">
+                C’EST QUOI LE VIBEATHON ?
+            </h2>
+            <div class="text-lg md:text-xl text-[#a78bfa] max-w-3xl mb-12 space-y-6 reveal delay-100">
+                <p>Le <span class="text-white font-semibold">VIBEATHON</span> est une nouvelle génération de hackathon pensée pour démocratiser l’innovation.</p>
+                <p>Contrairement aux hackathons classiques souvent réservés aux développeurs expérimentés, le VIBEATHON ouvre la création numérique à tous les profils :</p>
+                <div class="flex flex-wrap gap-2 text-white font-medium items-center">
+                    <span class="px-2 py-1 bg-[#2e1065] border border-[#3c1e6e] rounded">étudiants</span>
+                    <span class="px-2 py-1 bg-[#2e1065] border border-[#3c1e6e] rounded">entrepreneurs</span>
+                    <button id="see-more-btn" class="text-sm font-semibold text-purple-400 hover:underline flex items-center gap-1 cursor-pointer">
+                        Voir plus <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" class="transition-transform"><path d="M2 4L6 8L10 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
-                    <button type="button" class="payment-method" data-pay-method="djamo">
-                        <div class="payment-icon djamo">D</div>
-                        <div class="payment-meta">
-                            <div class="payment-name">Djamo</div>
-                            <div class="payment-hint">Payer via Djamo</div>
+                </div>
+                
+                <div id="extra-content" class="hidden space-y-6 pt-2 animate-in fade-in duration-500">
+                    <div class="flex flex-wrap gap-2 text-white font-medium">
+                        <span class="px-2 py-1 bg-[#2e1065] border border-[#3c1e6e] rounded">créatifs</span>
+                        <span class="px-2 py-1 bg-[#2e1065] border border-[#3c1e6e] rounded">professionnels</span>
+                        <span class="px-2 py-1 bg-[#2e1065] border border-[#3c1e6e] rounded">passionnés de technologie</span>
+                    </div>
+                    <p>Grâce aux outils d’intelligence artificielle et au Vibecoding, les participants peuvent transformer une idée en solution concrète sans écrire une seule ligne de code.</p>
+                    
+                    <div class="space-y-4 pt-4 border-l-2 border-purple-500 pl-6">
+                        <p class="text-white font-bold uppercase tracking-wider text-sm">Le VIBEATHON devient alors :</p>
+                        <ul class="space-y-2 text-[#a78bfa]">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> un espace d’apprentissage,</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> un laboratoire d’innovation,</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> une expérience immersive,</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> et une plateforme de révélation des talents.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IDE Visual Area -->
+            <div class="relative mt-20 mb-32 group reveal delay-200">
+                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                
+                <div class="relative bg-[#1a0b2e] rounded-xl border border-[#3c1e6e] shadow-2xl overflow-hidden animate-float">
+                    <!-- Title Bar -->
+                    <div class="h-10 bg-[#2e1065] border-b border-[#3c1e6e] flex items-center px-4 justify-between">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                         </div>
+                        <div class="flex gap-4">
+                            <div class="px-3 py-1 bg-[#1a0b2e] border border-[#3c1e6e] rounded text-[10px] text-[#a78bfa] font-mono">Market_CI.vibe</div>
+                        </div>
+                        <div class="w-12"></div>
+                    </div>
+                    
+                    <!-- IDE Content -->
+                    <div class="flex h-[400px]">
+                        <div class="w-12 border-r border-[#3c1e6e] bg-[#1a0b2e] flex flex-col items-center py-4 gap-6 text-[#a78bfa]">
+                            <div class="w-6 h-6 hover:text-white cursor-pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></div>
+                            <div class="w-6 h-6 text-purple-400 cursor-pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
+                        </div>
+                        
+                        <div class="flex-1 flex overflow-hidden">
+                            <div class="w-1/3 border-r border-[#3c1e6e] bg-[#1a0b2e] p-6 flex flex-col">
+                                <div class="text-[10px] text-[#a78bfa] font-bold uppercase mb-4 tracking-widest">VIBE ASSISTANT</div>
+                                <div class="bg-[#2e1065] p-4 rounded-lg border border-[#3c1e6e]">
+                                    <div class="text-[11px] text-purple-400 font-mono mb-2">Génération...</div>
+                                    <p class="text-xs text-[#e6edf3]">Je crée ton app pour <span class="text-purple-400">Market CI</span>...</p>
+                                </div>
+                            </div>
+                            <div class="flex-1 bg-[#1a0b2e] p-8 font-mono text-sm">
+                                <p class="text-[#a78bfa] text-xs">// Utilisateur: vous@vibeathon</p>
+                                <p class="text-white mt-2">"Crée une app de gestion pour PME"</p>
+                                <div class="mt-8 p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+                                    <p class="text-purple-400">VIBE ASSISTANT: Module prêt !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex flex-col items-center">
+                    <div id="ide-tabs" class="inline-flex bg-[#2e1065] border border-[#3c1e6e] rounded-full p-1 mb-6">
+                        <button class="px-6 py-2 rounded-full text-sm font-semibold bg-[#1a0b2e] text-white border border-[#3c1e6e]">Vibecoding</button>
+                        <button class="px-6 py-2 rounded-full text-sm font-semibold text-[#a78bfa] hover:text-white transition-colors">Design</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Section (GitHub Security/Autofix Design) -->
+      <section id="why" class="py-32 border-t border-[#3c1e6e]/30 relative overflow-hidden bg-[#1a0b2e]">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8">
+            <!-- Top Shield Icon -->
+            <div class="flex justify-center mb-8 reveal">
+                <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.4)] border border-purple-400/50">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">POURQUOI LE VIBEATHON EXISTE ?</h2>
+                <p class="text-lg md:text-xl text-[#a78bfa] max-w-3xl mx-auto leading-relaxed">
+                    L’intelligence artificielle transforme déjà le monde : éducation, finance, agriculture, santé, entrepreneuriat… 
+                    Mais une grande partie de la jeunesse africaine reste encore éloignée de ces opportunités.
+                </p>
+            </div>
+
+            <!-- Main Dark Container with Glow -->
+            <div class="relative max-w-6xl mx-auto reveal">
+                <!-- Central Purple Glow -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-purple-600/10 blur-[120px] rounded-full"></div>
+                
+                <div class="relative bg-gradient-to-b from-[#2e1065] to-[#1a0b2e] border border-[#3c1e6e] rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden min-h-[500px]">
+                    
+                    <!-- Left Content -->
+                    <div class="flex-1 space-y-6 z-10 text-center lg:text-left">
+                        <h3 class="text-2xl md:text-3xl font-bold text-white">Transformer les barrières en solutions concrètes.</h3>
+                        <p class="text-[#a78bfa] text-lg leading-relaxed">
+                            Le VIBEATHON casse les codes. Nous remplaçons la peur par la création, et le manque d'outils par l'accès illimité à l'IA.
+                        </p>
+                        <a href="#" class="inline-flex items-center gap-2 text-white font-bold hover:text-purple-400 transition-colors group">
+                            Découvrir notre vision <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-1 transition-transform"><path d="M9 18l6-6-6-6"/></svg>
+                        </a>
+                    </div>
+
+                    <!-- Right Content (The Autofix Window) -->
+                    <div class="flex-1 w-full z-10 relative">
+                        <!-- Floating Purple Glow behind window -->
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/30 blur-[60px] rounded-full animate-pulse-glow"></div>
+                        
+                        <!-- Window Structure -->
+                        <div class="relative bg-[#2e1065] border border-[#3c1e6e] rounded-2xl shadow-2xl overflow-hidden animate-float">
+                            <!-- Window Header -->
+                            <div class="bg-[#1a0b2e] px-4 py-3 border-b border-[#3c1e6e] flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <svg width="12" height="12" viewBox="0 0 16 16" class="fill-purple-400"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+                                    </div>
+                                    <span class="text-[11px] font-bold text-[#a78bfa]">vibe-assistant</span>
+                                    <span class="px-1.5 py-0.5 bg-[#1a0b2e] border border-[#3c1e6e] rounded text-[9px] text-[#a78bfa] font-bold">bot</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Window Content -->
+                            <div class="p-6 space-y-4">
+                                <p class="text-[11px] text-[#a78bfa] leading-relaxed">
+                                    "Le manque de formation pratique et la peur de la technologie sont les plus grandes barrières pour la jeunesse africaine."
+                                </p>
+                                <p class="text-[11px] text-[#a78bfa] leading-relaxed">
+                                    Pour corriger cela, le VIBEATHON propose une formation accélérée et des outils IA simplifiés pour passer à l'action immédiatement.
+                                </p>
+                                
+                                <!-- The Diff View -->
+                                <div class="bg-[#1a0b2e] rounded-lg border border-[#3c1e6e] overflow-hidden font-mono text-[10px]">
+                                    <div class="flex items-center gap-2 px-3 py-2 bg-[#2e1065] border-b border-[#3c1e6e]">
+                                        <div class="w-3 h-3 text-purple-400"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+                                        <span class="text-white font-bold">Vibe Autofix</span>
+                                        <span class="text-[#a78bfa] ml-auto">AI</span>
+                                    </div>
+                                    <div class="p-4 space-y-1">
+                                        <div class="flex gap-4 bg-red-500/10 border-l-2 border-red-500 py-1 px-2">
+                                            <span class="text-red-500/50 w-4">12</span>
+                                            <span class="text-red-300">- Statut: Consommateur (Peur de coder)</span>
+                                        </div>
+                                        <div class="flex gap-4 bg-green-500/10 border-l-2 border-green-500 py-1 px-2">
+                                            <span class="text-green-500/50 w-4">12</span>
+                                            <span class="text-green-300">+ Statut: Créateur (Vibecoding Activé)</span>
+                                        </div>
+                                        <div class="flex gap-4 py-1 px-2">
+                                            <span class="text-[#3c1e6e] w-4">13</span>
+                                            <span class="text-[#a78bfa]">  Solution: "Application PME Ivoirienne"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+      <section id="why" class="py-32 border-t border-[#3c1e6e]/30 relative overflow-hidden bg-[#1a0b2e]">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8">
+            <!-- Top Shield Icon -->
+            <div class="flex justify-center mb-8 reveal">
+                <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.4)] border border-purple-400/50">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">POURQUOI LE VIBEATHON EXISTE ?</h2>
+                <p class="text-lg md:text-xl text-[#a78bfa] max-w-3xl mx-auto leading-relaxed">
+                    L’intelligence artificielle transforme déjà le monde : éducation, finance, agriculture, santé, entrepreneuriat… 
+                    Mais une grande partie de la jeunesse africaine reste encore éloignée de ces opportunités.
+                </p>
+            </div>
+
+            <!-- Main Dark Container with Glow -->
+            <div class="relative max-w-6xl mx-auto reveal">
+                <!-- Central Purple Glow -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-purple-600/10 blur-[120px] rounded-full"></div>
+                
+                <div class="relative bg-gradient-to-b from-[#2e1065] to-[#1a0b2e] border border-[#3c1e6e] rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden min-h-[500px]">
+                    
+                    <!-- Left Content -->
+                    <div class="flex-1 space-y-6 z-10 text-center lg:text-left">
+                        <h3 class="text-2xl md:text-3xl font-bold text-white">Transformer les barrières en solutions concrètes.</h3>
+                        <p class="text-[#a78bfa] text-lg leading-relaxed">
+                            Le VIBEATHON casse les codes. Nous remplaçons la peur par la création, et le manque d'outils par l'accès illimité à l'IA.
+                        </p>
+                        <a href="#" class="inline-flex items-center gap-2 text-white font-bold hover:text-purple-400 transition-colors group">
+                            Découvrir notre vision <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-1 transition-transform"><path d="M9 18l6-6-6-6"/></svg>
+                        </a>
+                    </div>
+
+                    <!-- Right Content (The Autofix Window) -->
+                    <div class="flex-1 w-full z-10 relative">
+                        <!-- Floating Purple Glow behind window -->
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/30 blur-[60px] rounded-full animate-pulse-glow"></div>
+                        
+                        <!-- Window Structure -->
+                        <div class="relative bg-[#2e1065] border border-[#3c1e6e] rounded-2xl shadow-2xl overflow-hidden animate-float">
+                            <!-- Window Header -->
+                            <div class="bg-[#1a0b2e] px-4 py-3 border-b border-[#3c1e6e] flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <svg width="12" height="12" viewBox="0 0 16 16" class="fill-purple-400"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+                                    </div>
+                                    <span class="text-[11px] font-bold text-[#a78bfa]">vibe-assistant</span>
+                                    <span class="px-1.5 py-0.5 bg-[#1a0b2e] border border-[#3c1e6e] rounded text-[9px] text-[#a78bfa] font-bold">bot</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Window Content -->
+                            <div class="p-6 space-y-4">
+                                <p class="text-[11px] text-[#a78bfa] leading-relaxed">
+                                    "Le manque de formation pratique et la peur de la technologie sont les plus grandes barrières pour la jeunesse africaine."
+                                </p>
+                                <p class="text-[11px] text-[#a78bfa] leading-relaxed">
+                                    Pour corriger cela, le VIBEATHON propose une formation accélérée et des outils IA simplifiés pour passer à l'action immédiatement.
+                                </p>
+                                
+                                <!-- The Diff View -->
+                                <div class="bg-[#1a0b2e] rounded-lg border border-[#3c1e6e] overflow-hidden font-mono text-[10px]">
+                                    <div class="flex items-center gap-2 px-3 py-2 bg-[#2e1065] border-b border-[#3c1e6e]">
+                                        <div class="w-3 h-3 text-purple-400"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+                                        <span class="text-white font-bold">Vibe Autofix</span>
+                                        <span class="text-[#a78bfa] ml-auto">AI</span>
+                                    </div>
+                                    <div class="p-4 space-y-1">
+                                        <div class="flex gap-4 bg-red-500/10 border-l-2 border-red-500 py-1 px-2">
+                                            <span class="text-red-500/50 w-4">12</span>
+                                            <span class="text-red-300">- Statut: Consommateur (Peur de coder)</span>
+                                        </div>
+                                        <div class="flex gap-4 bg-green-500/10 border-l-2 border-green-500 py-1 px-2">
+                                            <span class="text-green-500/50 w-4">12</span>
+                                            <span class="text-green-300">+ Statut: Créateur (Vibecoding Activé)</span>
+                                        </div>
+                                        <div class="flex gap-4 py-1 px-2">
+                                            <span class="text-[#3c1e6e] w-4">13</span>
+                                            <span class="text-[#a78bfa]">  Solution: "Application PME Ivoirienne"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Objectives Section (Advanced 3D Mascot Design) -->
+      <section id="objectifs" class="py-40 border-t border-[#3c1e6e]/30 relative overflow-hidden bg-[#1a0b2e]">
+        <!-- Background Ambient Glows -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-pink-600/10 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8 relative z-10">
+            <div class="text-center mb-32 reveal">
+                <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 uppercase">
+                    NOS OBJECTIFS
+                </h2>
+                <p class="text-xl md:text-2xl text-[#a78bfa] max-w-2xl mx-auto font-medium leading-relaxed">
+                    Une mission portée par une nouvelle génération de créateurs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Objective 1: Formation -->
+                <div class="group relative bg-[#2e1065]/40 border border-[#3c1e6e] rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 reveal overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-3xl group-hover:bg-purple-600/30 transition-colors"></div>
+                    
+                    <!-- 3D Mascot Visual: The "Brain" -->
+                    <div class="mascot-container mb-8">
+                        <div class="mascot-base animate-float-3d" style="--color-stop-1: #c084fc; --color-stop-2: #7c3aed; --glow-color: rgba(124,58,237,0.6);">
+                            <div class="mascot-part w-32 h-32 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"></div>
+                            <div class="mascot-part w-16 h-16 left-1/4 top-1/4 z-30 opacity-80 animate-floating-bubble"></div>
+                            <div class="mascot-part w-12 h-12 right-1/4 bottom-1/4 z-10 opacity-60 animate-floating-bubble" style="animation-delay: -2s"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold text-white mb-4">Former à l’IA</h3>
+                        <p class="text-[#a78bfa] leading-relaxed">
+                            Démystifier les outils de demain pour les rendre accessibles à chaque jeune talent africain.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective 2: Démocratisation -->
+                <div class="group relative bg-[#2e1065]/40 border border-[#3c1e6e] rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 reveal delay-100 overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 blur-3xl group-hover:bg-purple-600/30 transition-colors"></div>
+                    
+                    <!-- 3D Mascot Visual: The "Key" -->
+                    <div class="mascot-container mb-8">
+                        <div class="mascot-base animate-float-3d" style="--color-stop-1: #d8b4fe; --color-stop-2: #9333ea; --glow-color: rgba(147,51,234,0.6); animation-delay: -1s;">
+                            <div class="mascot-part w-28 h-28 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-2xl rotate-45"></div>
+                            <div class="mascot-part w-20 h-20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 rounded-full scale-125 border-4 border-purple-400/30 bg-transparent"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold text-white mb-4">Démocratiser</h3>
+                        <p class="text-[#a78bfa] leading-relaxed">
+                            Ouvrir l'innovation à tous les profils, sans barrière technique, grâce à la puissance du Vibecoding.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective 3: Solutions Locales -->
+                <div class="group relative bg-[#2e1065]/40 border border-[#3c1e6e] rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 reveal delay-200 overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-pink-600/20 blur-3xl group-hover:bg-pink-600/30 transition-colors"></div>
+                    
+                    <!-- 3D Mascot Visual: The "Map" -->
+                    <div class="mascot-container mb-8">
+                        <div class="mascot-base animate-float-3d" style="--color-stop-1: #f472b6; --color-stop-2: #db2777; --glow-color: rgba(219,39,119,0.6); animation-delay: -2s;">
+                            <div class="mascot-part w-32 h-32 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20" style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>
+                            <div class="mascot-part w-12 h-12 left-1/2 top-1/3 -translate-x-1/2 z-30 bg-white/20 blur-sm"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold text-white mb-4">Solutions locales</h3>
+                        <p class="text-[#a78bfa] leading-relaxed">
+                            Répondre aux défis réels du continent par des applications conçues par et pour les Africains.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective 4: Talents -->
+                <div class="group relative bg-[#2e1065]/40 border border-[#3c1e6e] rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 reveal delay-300 overflow-hidden lg:col-span-2">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/20 blur-3xl group-hover:bg-purple-600/30 transition-colors"></div>
+                    
+                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                        <!-- 3D Mascot Visual: The "Star" -->
+                        <div class="mascot-container !h-64 lg:w-1/2">
+                            <div class="mascot-base animate-float-3d" style="--color-stop-1: #c084fc; --color-stop-2: #7c3aed; --glow-color: rgba(124,58,237,0.6); animation-delay: -3.5s;">
+                                <div class="mascot-part w-36 h-36 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20" style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>
+                                <div class="absolute inset-0 bg-purple-400/20 blur-2xl rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 lg:w-1/2">
+                            <h3 class="text-3xl font-bold text-white mb-4">Révéler les talents</h3>
+                            <p class="text-[#a78bfa] text-lg leading-relaxed">
+                                Offrir une scène internationale et des opportunités concrètes à la jeunesse créative de Côte d'Ivoire.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objective 5: Écosystème -->
+                <div class="group relative bg-[#2e1065]/40 border border-[#3c1e6e] rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 reveal delay-400 overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-pink-600/20 blur-3xl group-hover:bg-pink-600/30 transition-colors"></div>
+                    
+                    <!-- 3D Mascot Visual: The "Network" -->
+                    <div class="mascot-container mb-8">
+                        <div class="mascot-base animate-float-3d" style="--color-stop-1: #f472b6; --color-stop-2: #db2777; --glow-color: rgba(219,39,119,0.6); animation-delay: -5s;">
+                            <div class="mascot-part w-24 h-24 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"></div>
+                            <div class="absolute inset-0 border-2 border-pink-400/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div class="absolute inset-4 border border-pink-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-bold text-white mb-4">Écosystème</h3>
+                        <p class="text-[#a78bfa] leading-relaxed">
+                            Bâtir un réseau solide entre startups, investisseurs et institutions pour pérenniser l'innovation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom CTA / Stats Summary -->
+            <div class="mt-32 p-12 bg-gradient-to-r from-purple-600/20 via-[#2e1065] to-pink-600/20 border border-[#3c1e6e] rounded-[3rem] relative overflow-hidden group reveal">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-1000"></div>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-3xl font-bold text-white mb-2">Prêt à vibrer avec nous ?</h3>
+                        <p class="text-[#a78bfa] text-lg">Rejoins l'aventure et transforme tes idées en réalité.</p>
+                    </div>
+                    <button class="px-10 py-4 bg-white text-[#1a0b2e] font-bold rounded-xl hover:bg-white/90 transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                        Participer au Vibeathon
                     </button>
                 </div>
             </div>
         </div>
-    </div>
+      </section>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="container hero-content">
-            <h1 class="reveal">Ce que tu imagines peut exister.</h1>
-            <p class="subtitle reveal">Pense. Crée. Lance.</p>
-            <div class="date-location reveal">07 Juillet 2026 — Abidjan, Côte d'Ivoire</div>
-            <a href="#tickets" class="btn-cta reveal">Je veux mon ticket →</a>
-        </div>
-    </section>
-
-    <!-- SECTION C'EST QUOI -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title reveal">C'est quoi le Vibeathon ?</h2>
-            <p class="about-text reveal">
-                Le Vibeathon n'est pas un hackathon classique. C'est un format nouvelle génération lié à la tendance du vibe coding — coder avec l'IA, les prompts et les bons outils plutôt qu'uniquement avec du code pur. Tu arrives avec une idée, tu repars avec un produit.
-            </p>
-            <div class="vibe-cards">
-                <div class="card reveal">
-                    <span class="icon">🎯</span>
-                    <h3>Vibe</h3>
-                    <p>Définis l'ambiance et la vision de ton projet avec l'IA.</p>
+      <!-- Stats Section -->
+      <section class="py-24 border-t border-[#3c1e6e]/30 bg-[#1a0b2e]">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Tout ce dont tu as besoin, en une seule journée.</h2>
+                    <p class="text-lg text-[#a78bfa]">Le Vibecoding permet de passer de l'idée à une application complète sans écrire de code.</p>
                 </div>
-                <div class="card reveal">
-                    <span class="icon">💡</span>
-                    <h3>Code</h3>
-                    <p>Assemble ton MVP à une vitesse record grâce aux outils modernes.</p>
-                </div>
-                <div class="card reveal">
-                    <span class="icon">🚀</span>
-                    <h3>Lance</h3>
-                    <p>Présente ton produit devant un jury et repars avec des prix.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION WHY -->
-    <section id="features">
-        <div class="container">
-            <h2 class="section-title reveal">Pourquoi participer ?</h2>
-            <div class="features-grid">
-                <div class="feature-item reveal">
-                    <div class="feature-icon">🤝</div>
-                    <h3>Networking Premium</h3>
-                    <p>Rencontre les meilleurs talents et acteurs de l'écosystème tech ivoirien.</p>
-                </div>
-                <div class="feature-item reveal">
-                    <div class="feature-icon">💎</div>
-                    <h3>Mentorat IA</h3>
-                    <p>Des experts en prompt engineering pour t'aider à propulser ton idée.</p>
-                </div>
-                <div class="feature-item reveal">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Prix d'Excellence</h3>
-                    <p>Gagne des financements et du matériel pour ton futur business.</p>
-                </div>
-                <div class="feature-item reveal">
-                    <div class="feature-icon">✨</div>
-                    <h3>Vibes Uniques</h3>
-                    <p>Une expérience immersive entre art, tech et créativité pure.</p>
-                </div>
-                <div class="feature-item reveal">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Masterclass IA</h3>
-                    <p>Apprends les dernières techniques de "vibe coding" en direct.</p>
-                </div>
-                <div class="feature-item reveal">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Communauté</h3>
-                    <p>Rejoins un mouvement de créateurs qui façonnent l'avenir.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION COUNTDOWN -->
-    <section class="countdown-section">
-        <div class="container">
-            <h2 class="section-title reveal">Le lancement approche</h2>
-            <div class="countdown-container reveal" id="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="days">00</span>
-                    <span class="countdown-label">Jours</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
-                    <span class="countdown-label">Heures</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
-                    <span class="countdown-label">Min</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
-                    <span class="countdown-label">Sec</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION TICKETS -->
-    <section id="tickets">
-        <div class="container">
-            <h2 class="section-title reveal">Prends ta place maintenant</h2>
-            <div class="tickets-grid">
-                <div class="ticket-card reveal">
-                    <h3>Ticket Supporter</h3>
-                    <div class="price">500 <span>FCFA</span></div>
-                    <ul class="ticket-features">
-                        <li>Accès à la communauté</li>
-                        <li>Support du projet</li>
-                        <li>Reçu de paiement</li>
-                    </ul>
-                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="500" data-ticket="supporter-500" style="width: 100%; text-align: center;">Payer →</button>
-                </div>
-                <div class="ticket-card reveal">
-                    <h3>Early Bird</h3>
-                    <div class="price">15.000 <span>FCFA</span></div>
-                    <ul class="ticket-features">
-                        <li>Accès aux 2 jours</li>
-                        <li>Goodies Vibeathon</li>
-                        <li>Repas inclus</li>
-                    </ul>
-                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="15000" data-ticket="early-bird" style="width: 100%; text-align: center;">Payer →</button>
-                </div>
-                <div class="ticket-card vip reveal">
-                    <h3>Pass VIP</h3>
-                    <div class="price">50.000 <span>FCFA</span></div>
-                    <ul class="ticket-features">
-                        <li>Tout le Pass Standard</li>
-                        <li>Siège VIP & Lounge</li>
-                        <li>Accès Networking Privé</li>
-                        <li>Dîner avec les mentors</li>
-                    </ul>
-                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="50000" data-ticket="vip" style="width: 100%; text-align: center;">Payer →</button>
-                </div>
-                <div class="ticket-card reveal">
-                    <h3>Standard</h3>
-                    <div class="price">25.000 <span>FCFA</span></div>
-                    <ul class="ticket-features">
-                        <li>Accès complet</li>
-                        <li>T-shirt de l'événement</li>
-                        <li>Ateliers pratiques</li>
-                    </ul>
-                    <button type="button" class="btn-cta" data-modal-open="paymentModal" data-amount="25000" data-ticket="standard" style="width: 100%; text-align: center;">Payer →</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION FAQ -->
-    <section id="faq">
-        <div class="container">
-            <h2 class="section-title reveal">Questions Fréquentes</h2>
-            <div class="faq-container">
-                <div class="faq-item reveal">
-                    <button class="faq-question">
-                        Qui peut participer ?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Tout le monde ! Que tu sois designer, marketeur, étudiant ou curieux de la tech. Pas besoin d'être un expert en code pur.</p>
+                <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <div class="p-6 bg-[#2e1065] border border-[#3c1e6e] rounded-xl hover:border-purple-500 transition-colors cursor-pointer group">
+                        <div class="w-10 h-10 rounded bg-purple-500/10 flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-colors">
+                            <svg class="fill-purple-400" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                        </div>
+                        <h3 class="font-bold mb-2 text-white">950 000 FCFA</h3>
+                        <p class="text-sm text-[#a78bfa]">Cagnotte totale en prix pour les meilleures solutions.</p>
                     </div>
-                </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question">
-                        C'est quoi le vibe coding ?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Le vibe coding est une approche où l'on utilise l'intelligence artificielle pour traduire une vision ou une "vibe" directement en produit fonctionnel, en se concentrant sur le résultat final plutôt que sur la syntaxe.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question">
-                        Faut-il savoir coder ?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Non, c'est justement tout l'intérêt ! Tu peux utiliser des outils No-Code ou l'IA pour générer le code nécessaire à ton projet.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question">
-                        Qu'est-ce qu'on gagne ?
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>En plus de l'expérience et du networking, il y a des prix en cash, du matériel high-tech et des opportunités d'incubation pour les meilleurs projets.</p>
+                    <div class="p-6 bg-[#2e1065] border border-[#3c1e6e] rounded-xl hover:border-purple-500 transition-colors cursor-pointer group">
+                        <div class="w-10 h-10 rounded bg-pink-500/10 flex items-center justify-center mb-4 group-hover:bg-pink-500/20 transition-colors">
+                            <svg class="fill-pink-400" width="20" height="20" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h3 class="font-bold mb-2 text-white">400 Participants</h3>
+                        <p class="text-sm text-[#a78bfa]">Rejoins la plus grande communauté de créateurs IA.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- SECTION CONTACT -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title reveal">Contacte-nous</h2>
-            <div class="contact-container reveal">
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Nom Complet</label>
-                        <input type="text" id="name" placeholder="Ton nom ici" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="ton-email@exemple.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" rows="5" placeholder="Comment pouvons-nous t'aider ?" required></textarea>
-                    </div>
-                    <button type="submit" class="btn-cta">Envoyer le message →</button>
-                </form>
+    <!-- Footer -->
+    <footer class="py-20 bg-[#1a0b2e] border-t border-[#3c1e6e]">
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-5 gap-8">
+            <div class="col-span-2 md:col-span-1">
+                <svg height="32" viewBox="0 0 24 24" fill="none" width="32" class="mb-4">
+                    <path d="M4 4L12 20L20 4" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="text-sm text-[#a78bfa]">Abonne-toi à notre newsletter</p>
+                <button class="mt-4 border border-[#3c1e6e] rounded-md px-4 py-2 text-sm font-semibold hover:border-white transition-colors">S'abonner</button>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4">Événement</h4>
+                <ul class="text-sm text-[#a78bfa] space-y-2">
+                    <li><a href="#" class="hover:text-purple-400">Concept</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Programme</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Tarifs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4">Ressources</h4>
+                <ul class="text-sm text-[#a78bfa] space-y-2">
+                    <li><a href="#" class="hover:text-purple-400">FAQ</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Guide Vibecoding</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Outils IA</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4">Légal</h4>
+                <ul class="text-sm text-[#a78bfa] space-y-2">
+                    <li><a href="#" class="hover:text-purple-400">Confidentialité</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Conditions</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-4">Contact</h4>
+                <ul class="text-sm text-[#a78bfa] space-y-2">
+                    <li><a href="#" class="hover:text-purple-400">Support</a></li>
+                    <li><a href="#" class="hover:text-purple-400">Partenariats</a></li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <span class="logo-text">VIBEATHON</span>
-                <p style="color: var(--text-muted); margin-top: 0.5rem;">Abidjan 2026 — Côte d'Ivoire</p>
+        <div class="max-w-[1280px] mx-auto px-4 md:px-8 mt-16 pt-8 border-t border-[#3c1e6e] flex flex-col md:flex-row justify-between text-xs text-[#a78bfa]">
+            <div class="flex gap-4">
+                <span>© 2026 Vibeathon, Inc.</span>
+                <a href="#" class="hover:text-purple-400">Mentions légales</a>
             </div>
-            <div class="social-links">
-                <a href="#">Instagram</a>
-                <a href="#">Twitter / X</a>
-                <a href="#">TikTok</a>
+            <div class="flex gap-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-purple-400">Twitter</a>
+                <a href="#" class="hover:text-purple-400">LinkedIn</a>
+                <a href="#" class="hover:text-purple-400">Instagram</a>
             </div>
-            <p class="copyright">© 2026 VIBEATHON. Tous droits réservés.</p>
         </div>
     </footer>
 
-    <script>
-        // --- COUNTDOWN LOGIC ---
-        const targetDate = new Date('July 7, 2026 00:00:00').getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = String(days).padStart(2, '0');
-            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById('countdown').innerHTML = "<span class='countdown-number'>L'ÉVÉNEMENT A COMMENCÉ !</span>";
-            }
-        }
-
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // --- FAQ ACCORDION ---
-        document.querySelectorAll('.faq-question').forEach(button => {
-            button.addEventListener('click', () => {
-                const faqItem = button.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // Close all other items
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-
-        // --- REVEAL ANIMATIONS ---
-        const revealCallback = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(revealCallback, {
-            threshold: 0.1
-        });
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        const lastActiveByModalId = new Map();
-
-        function openModal(modal, triggerEl) {
-            if (!modal) return;
-            const modalPanel = modal.querySelector('.modal-panel');
-            lastActiveByModalId.set(modal.id, triggerEl || document.activeElement);
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('modal-open');
-            if (modalPanel) modalPanel.focus();
-        }
-
-        function closeModal(modal) {
-            if (!modal) return;
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-            if (!document.querySelector('.modal.is-open')) {
-                document.body.classList.remove('modal-open');
-            }
-            const lastActive = lastActiveByModalId.get(modal.id);
-            if (lastActive && typeof lastActive.focus === 'function') {
-                lastActive.focus();
-            }
-            lastActiveByModalId.delete(modal.id);
-        }
-
-        const paymentModal = document.getElementById('paymentModal');
-        const paymentAmountEl = document.getElementById('paymentAmount');
-        let paymentContext = { amount: 0, ticket: '' };
-
-        function setPaymentContextFromTrigger(triggerEl) {
-            const amount = Number(triggerEl.getAttribute('data-amount'));
-            const ticket = triggerEl.getAttribute('data-ticket') || '';
-            paymentContext = { amount, ticket };
-
-            if (paymentAmountEl) {
-                paymentAmountEl.textContent = `${amount.toLocaleString('fr-FR')} FCFA`;
-            }
-        }
-
-        document.querySelectorAll('[data-modal-open]').forEach(el => {
-            el.addEventListener('click', (e) => {
-                const modalId = el.getAttribute('data-modal-open');
-                if (!modalId) return;
-                const modal = document.getElementById(modalId);
-                if (!modal) return;
-
-                e.preventDefault();
-
-                if (modalId === 'paymentModal') {
-                    setPaymentContextFromTrigger(el);
-                }
-
-                openModal(modal, el);
-            });
-        });
-
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.querySelectorAll('[data-modal-close]').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    closeModal(modal);
-                });
-            });
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key !== 'Escape') return;
-            const open = document.querySelector('.modal.is-open');
-            if (!open) return;
-            closeModal(open);
-        });
-
-        // --- WAVE ANIMATION ---
-        const wavePath = document.getElementById('wavePath');
-        let phase = 0;
-
-        function animateWave() {
-            phase += 0.02;
-            const waveY = Math.sin(phase) * 20;
-            const d = `M0,500 C200,${400 + waveY} 300,${600 - waveY} 500,500 C700,${400 - waveY} 800,${600 + waveY} 1000,500 L1000,1000 L0,1000 Z`;
-            wavePath.setAttribute('d', d);
-            requestAnimationFrame(animateWave);
-        }
-        animateWave();
-
-        async function startWaveCheckout({ amount, ticket, buttonEl }) {
-            if (!buttonEl) return;
-
-            const originalText = buttonEl.textContent;
-            buttonEl.disabled = true;
-            buttonEl.textContent = 'Ouverture Wave…';
-
-            const fallbackPayLinkRaw = 'https://pay.wave.com/m/M_ci_yBsEOmpI8df1/c/ci/.';
-            const fallbackPayLink = fallbackPayLinkRaw.endsWith('.') ? fallbackPayLinkRaw.slice(0, -1) : fallbackPayLinkRaw;
-
-            try {
-                const res = await fetch('/api/wave/create-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount, currency: 'XOF', ticket })
-                });
-
-                const data = await res.json().catch(() => null);
-                const session = data && data.session ? data.session : null;
-                const waveLaunchUrl =
-                    (data && data.waveLaunchUrl) ||
-                    (session && (session.wave_launch_url || session.waveLaunchUrl)) ||
-                    null;
-
-                if (!res.ok || !waveLaunchUrl) {
-                    const isNotConfigured = data && data.error === 'server_not_configured';
-                    if (isNotConfigured) {
-                        if (confirm(`Paiement Wave: entre le montant ${amount.toLocaleString('fr-FR')} FCFA dans Wave. Continuer ?`)) {
-                            window.location.href = fallbackPayLink;
-                            return;
-                        }
-                        throw new Error('cancelled');
-                    }
-                    throw new Error('wave_session_failed');
-                }
-
-                window.location.href = waveLaunchUrl;
-            } catch {
-                buttonEl.disabled = false;
-                buttonEl.textContent = originalText;
-                alert("Paiement Wave indisponible pour l'instant. Réessaie dans quelques minutes.");
-            }
-        }
-
-        async function startDjamoCheckout({ amount, ticket, buttonEl }) {
-            if (!buttonEl) return;
-
-            const originalText = buttonEl.textContent;
-            buttonEl.disabled = true;
-            buttonEl.textContent = 'Ouverture…';
-
-            const fallbackPayLink = 'https://pay.djamo.com/x94zp';
-
-            try {
-                const res = await fetch('/api/djamo/create-charge', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount, ticket })
-                });
-
-                const data = await res.json().catch(() => null);
-                const charge = data && data.charge ? data.charge : null;
-                const paymentUrl =
-                    (data && data.paymentUrl) ||
-                    (charge && (charge.paymentUrl || charge.payment_url)) ||
-                    null;
-
-                if (!res.ok || !paymentUrl) {
-                    const isNotConfigured = data && data.error === 'server_not_configured';
-                    if (isNotConfigured) {
-                        if (confirm(`Paiement Djamo: entre le montant ${amount.toLocaleString('fr-FR')} FCFA dans Djamo. Continuer ?`)) {
-                            window.location.href = fallbackPayLink;
-                            return;
-                        }
-                        throw new Error('cancelled');
-                    }
-                    throw new Error('djamo_charge_failed');
-                }
-
-                window.location.href = paymentUrl;
-            } catch (err) {
-                buttonEl.disabled = false;
-                buttonEl.textContent = originalText;
-
-                if (err && String(err.message) === 'cancelled') {
-                    return;
-                }
-
-                alert("Paiement Djamo indisponible pour l'instant. Réessaie dans quelques minutes.");
-            }
-        }
-
-        if (paymentModal) {
-            paymentModal.querySelectorAll('[data-pay-method]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const method = btn.getAttribute('data-pay-method');
-                    if (method === 'wave') {
-                        startWaveCheckout({ amount: paymentContext.amount, ticket: paymentContext.ticket, buttonEl: btn });
-                        return;
-                    }
-                    if (method === 'djamo') {
-                        startDjamoCheckout({ amount: paymentContext.amount, ticket: paymentContext.ticket, buttonEl: btn });
-                    }
-                });
-            });
-        }
-    </script>
-</body>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
