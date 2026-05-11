@@ -4,6 +4,32 @@
   --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+@layer utilities {
+  .animate-beam {
+    animation: beam 0.8s ease-out forwards;
+  }
+  .animate-glitch-1 {
+    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+  }
+  .animate-glitch-2 {
+    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
+  }
+}
+
+@keyframes beam {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(200%) skewX(-20deg); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
 @theme {
   --color-gh-bg: #1a0b2e;
   --color-gh-border: #3c1e6e;

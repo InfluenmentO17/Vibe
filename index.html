@@ -12,8 +12,13 @@
       <div class="max-w-[1280px] mx-auto px-4 md:px-8 w-full flex items-center justify-between">
         <div class="flex items-center gap-4">
           <a href="/" class="flex items-center gap-3 group">
-            <div id="ae-logo" class="flex items-center text-white font-black tracking-tighter text-xl overflow-hidden py-2">
-              VIBEATHON 2026
+            <div id="ae-logo" class="relative flex items-center text-white font-black tracking-tighter text-2xl uppercase italic px-4 py-1 overflow-hidden group">
+              <span class="relative z-10">VIBEATHON 2026</span>
+              <!-- Cinematic Beam -->
+              <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-purple-400 to-transparent -translate-x-full group-hover:animate-beam z-20 opacity-0 group-hover:opacity-100"></div>
+              <!-- Glitch Layers -->
+              <div class="absolute inset-0 text-red-500 opacity-0 group-hover:opacity-70 group-hover:animate-glitch-1 z-0 translate-x-1">VIBEATHON 2026</div>
+              <div class="absolute inset-0 text-cyan-500 opacity-0 group-hover:opacity-70 group-hover:animate-glitch-2 z-0 -translate-x-1">VIBEATHON 2026</div>
             </div>
           </a>
           <nav class="hidden lg:flex items-center gap-4 text-sm font-semibold">
