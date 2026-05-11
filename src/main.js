@@ -127,132 +127,81 @@ document.querySelectorAll('#faq .group').forEach(item => {
 })
 
 // Registration Canvas Animation
-// (Ancienne animation conservée ou remplacée si besoin, mais on ajoute l'intro ici)
-
-// Cinematic Intro Animation
-const introOverlay = document.getElementById('intro-overlay');
-const introCanvas = document.getElementById('intro-canvas');
-const introLogo = document.getElementById('intro-logo-container');
-
-if (introCanvas && introOverlay) {
-  const ctx = introCanvas.getContext('2d');
-  let particles = [];
-  let frame = 0;
-
-  function resize() {
-    introCanvas.width = window.innerWidth;
-    introCanvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  class SmokeParticle {
-    constructor() {
-      this.reset();
+const canvas = document.getElementById('registration-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
     }
-    reset() {
-      this.x = Math.random() * introCanvas.width;
-      this.y = introCanvas.height + 100;
-      this.vx = (Math.random() - 0.5) * 2;
-      this.vy = -Math.random() * 2 - 1;
-      this.size = Math.random() * 100 + 50;
-      this.alpha = 0;
-      this.maxAlpha = Math.random() * 0.3;
-      this.life = 0;
-      this.maxLife = Math.random() * 200 + 100;
+    
+    window.addEventListener('resize', resize);
+    resize();
+    
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.color = Math.random() > 0.5 ? '#a855f7' : '#ec4899';
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
     }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life++;
-      if (this.life < 50) this.alpha += 0.01;
-      if (this.life > this.maxLife - 50) this.alpha -= 0.01;
-      if (this.life >= this.maxLife || this.alpha <= 0) this.reset();
+    
+    function init() {
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
     }
-    draw() {
-      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-      gradient.addColorStop(0, `rgba(168, 85, 247, ${this.alpha})`); // Purple
-      gradient.addColorStop(1, 'rgba(5, 1, 13, 0)');
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        
+        // Draw connections
+        particles.forEach((p1, i) => {
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+                if (dist < 100) {
+                    ctx.strokeStyle = `rgba(168, 85, 247, ${1 - dist/100})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        
+        requestAnimationFrame(animate);
     }
-  }
-
-  class Spark {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = Math.random() * introCanvas.width;
-      this.y = Math.random() * introCanvas.height;
-      this.vx = (Math.random() - 0.5) * 10;
-      this.vy = (Math.random() - 0.5) * 10;
-      this.size = Math.random() * 2;
-      this.color = Math.random() > 0.5 ? '#60a5fa' : '#a855f7'; // Neon blue or purple
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > introCanvas.width || this.y < 0 || this.y > introCanvas.height) this.reset();
-    }
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-  }
-
-  for (let i = 0; i < 40; i++) particles.push(new SmokeParticle());
-  for (let i = 0; i < 60; i++) particles.push(new Spark());
-
-  function animateIntro() {
-    frame++;
-    ctx.fillStyle = '#05010d';
-    ctx.fillRect(0, 0, introCanvas.width, introCanvas.height);
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    // Logo reveal timing
-    if (frame === 60) {
-      introLogo.style.transition = 'all 2s cubic-bezier(0.22, 1, 0.36, 1)';
-      introLogo.style.opacity = '1';
-      introLogo.style.transform = 'scale(1) rotateX(0deg)';
-    }
-
-    // Dynamic light streaks
-    if (frame % 20 === 0) {
-      ctx.strokeStyle = 'rgba(96, 165, 250, 0.5)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, Math.random() * introCanvas.height);
-      ctx.lineTo(introCanvas.width, Math.random() * introCanvas.height);
-      ctx.stroke();
-    }
-
-    if (frame < 300) {
-      requestAnimationFrame(animateIntro);
-    } else {
-      // Fade out intro
-      introOverlay.style.transition = 'opacity 1.5s ease-out';
-      introOverlay.style.opacity = '0';
-      setTimeout(() => {
-        introOverlay.style.display = 'none';
-        document.body.style.overflowY = 'auto';
-      }, 1500);
-    }
-  }
-
-  document.body.style.overflowY = 'hidden';
-  animateIntro();
+    
+    init();
+    animate();
 }
 
 // Logo Animation (Navbar)
