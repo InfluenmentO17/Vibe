@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@layer utilities {
+  .animate-shine {
+    animation: shine 2s infinite;
+  }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+
+@theme {
   --color-gh-bg: #1a0b2e;
   --color-gh-border: #3c1e6e;
   --color-gh-text: #e6edf3;
