@@ -203,3 +203,18 @@ if (canvas) {
     init();
     animate();
 }
+
+// Logo Animation
+const logoText = document.getElementById('logo-text');
+if (logoText) {
+  let hue = 0;
+  function animateLogo() {
+    hue = (hue + 1) % 360;
+    // Subtle color shift and gentle float
+    const yOffset = Math.sin(Date.now() / 1000) * 3;
+    logoText.style.color = `hsl(${hue}, 70%, 70%)`;
+    logoText.style.transform = `translateY(${yOffset}px)`;
+    requestAnimationFrame(animateLogo);
+  }
+  animateLogo();
+}
