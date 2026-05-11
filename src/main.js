@@ -286,6 +286,29 @@ if (regForm) {
   });
 }
 
+// Payment Selection Logic
+window.selectPayment = function(method, number, name) {
+  const options = document.querySelectorAll('.payment-option');
+  const instructions = document.getElementById('payment-instructions');
+  const numDisplay = document.getElementById('payment-number');
+  const nameDisplay = document.getElementById('payment-name');
+  
+  // Highlight selected option
+  options.forEach(opt => {
+    opt.classList.remove('border-purple-500', 'bg-purple-500/5');
+    if (opt.innerText.toLowerCase().includes(method)) {
+      opt.classList.add('border-purple-500', 'bg-purple-500/5');
+    }
+  });
+
+  // Show instructions
+  if (instructions && numDisplay && nameDisplay) {
+    numDisplay.innerText = number;
+    nameDisplay.innerText = name;
+    instructions.classList.remove('hidden');
+  }
+};
+
 // Objectives Interactive Canvas Animation
 const objBgCanvas = document.getElementById('objectives-bg-canvas');
 const objInteractiveCanvas = document.getElementById('objectives-interactive-canvas');

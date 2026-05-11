@@ -191,32 +191,40 @@
 
                         <!-- Step 2: Payment -->
                         <div id="form-step-2" class="hidden space-y-6">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FF6600]/50 transition-colors cursor-pointer">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-[#FF6600]/10 rounded-lg flex items-center justify-center text-[#FF6600] font-bold text-xs">O</div>
-                                        <div>
-                                            <div class="text-xs font-bold text-white uppercase tracking-wider">Orange Money</div>
-                                            <div class="text-sm text-[#8b949e]">07 00 00 00 00</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[10px] text-gray-500 font-mono">NOM_BÉNÉFICIAIRE</div>
+                            <p class="text-[10px] font-bold uppercase text-[#8b949e] tracking-widest text-center">Sélectionnez votre moyen de paiement</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Orange -->
+                                <div class="payment-option flex flex-col items-center justify-center p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FF6600] transition-all cursor-pointer" onclick="selectPayment('orange', '07 00 00 00 00', 'NOM_BÉNÉFICIAIRE')">
+                                    <div class="w-12 h-12 bg-[#FF6600]/10 rounded-xl flex items-center justify-center text-[#FF6600] font-black text-xl mb-2 group-hover:scale-110 transition-transform">O</div>
+                                    <span class="text-[10px] font-bold text-white uppercase">Orange</span>
                                 </div>
-                                <div class="flex items-center justify-between p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FFCC00]/50 transition-colors cursor-pointer">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-[#FFCC00]/10 rounded-lg flex items-center justify-center text-[#FFCC00] font-bold text-xs italic">M</div>
-                                        <div>
-                                            <div class="text-xs font-bold text-white uppercase tracking-wider">MTN MoMo</div>
-                                            <div class="text-sm text-[#8b949e]">05 00 00 00 00</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-[10px] text-gray-500 font-mono">NOM_BÉNÉFICIAIRE</div>
+                                <!-- MTN -->
+                                <div class="payment-option flex flex-col items-center justify-center p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#FFCC00] transition-all cursor-pointer" onclick="selectPayment('mtn', '05 00 00 00 00', 'NOM_BÉNÉFICIAIRE')">
+                                    <div class="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center text-[#FFCC00] font-black text-xl mb-2 group-hover:scale-110 transition-transform italic">M</div>
+                                    <span class="text-[10px] font-bold text-white uppercase">MTN</span>
                                 </div>
+                                <!-- Wave -->
+                                <div class="payment-option flex flex-col items-center justify-center p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#1ca1f1] transition-all cursor-pointer" onclick="selectPayment('wave', '01 00 00 00 00', 'NOM_BÉNÉFICIAIRE')">
+                                    <div class="w-12 h-12 bg-[#1ca1f1]/10 rounded-xl flex items-center justify-center text-[#1ca1f1] font-black text-xl mb-2 group-hover:scale-110 transition-transform">W</div>
+                                    <span class="text-[10px] font-bold text-white uppercase">Wave</span>
+                                </div>
+                                <!-- Moov -->
+                                <div class="payment-option flex flex-col items-center justify-center p-4 bg-[#161b22] border border-[#30363d] rounded-2xl group hover:border-[#00853f] transition-all cursor-pointer" onclick="selectPayment('moov', '01 00 00 00 00', 'NOM_BÉNÉFICIAIRE')">
+                                    <div class="w-12 h-12 bg-[#00853f]/10 rounded-xl flex items-center justify-center text-[#00853f] font-black text-xl mb-2 group-hover:scale-110 transition-transform italic">M</div>
+                                    <span class="text-[10px] font-bold text-white uppercase">Moov</span>
+                                </div>
+                            </div>
+
+                            <!-- Selected Payment Instructions -->
+                            <div id="payment-instructions" class="hidden animate-scale-up p-4 bg-purple-500/5 border border-purple-500/20 rounded-2xl text-center">
+                                <p class="text-[10px] text-purple-400 uppercase font-bold tracking-widest mb-2">Instructions de transfert</p>
+                                <div class="text-white font-black text-lg mb-1" id="payment-number">00 00 00 00 00</div>
+                                <div class="text-[10px] text-gray-500 font-mono uppercase" id="payment-name">NOM_BÉNÉFICIAIRE</div>
                             </div>
 
                             <div class="group">
                                 <label class="block text-[10px] font-bold uppercase text-[#8b949e] tracking-widest mb-2 group-focus-within:text-purple-400 transition-colors">ID Transaction / Référence</label>
-                                <input type="text" required placeholder="Saisissez le code de confirmation..." class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
+                                <input type="text" id="transaction-id" required placeholder="Saisissez le code reçu par SMS..." class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all" />
                             </div>
 
                             <div class="flex gap-4 pt-4">
